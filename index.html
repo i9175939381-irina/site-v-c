@@ -17,7 +17,7 @@
       <a href="#about">Обо мне</a>
       <a href="#skills">Умения</a>
       <a href="#projects">Проекты</a>
-      <a href="#contact" class="nav__cta">Контакты</a>
+      <a href="#contact" class="nav__cta btn btn--warm btn--compact"><span class="btn__txt">Контакты</span></a>
     </nav>
   </header>
 
@@ -33,8 +33,8 @@
             Не просто «что-то сверстать», а собрать ощущение, стиль, логику и подачу так, чтобы проект хотелось открыть, листать и запомнить.
           </p>
           <div class="hero__actions animate-in" style="--d: 240ms">
-            <a class="btn btn--primary" href="#projects">Посмотреть проекты</a>
-            <a class="btn btn--ghost" href="#contact">Обсудить задачу</a>
+            <a class="btn btn--secondary" href="#projects"><span class="btn__txt">Посмотреть проекты</span></a>
+            <a class="btn btn--primary" href="#contact"><span class="btn__txt">Обсудить задачу</span></a>
           </div>
         </div>
         <div class="hero__visual animate-in" style="--d: 120ms">
@@ -229,12 +229,15 @@
       </div>
     </section>
 
-    <section class="manifesto" aria-labelledby="manifesto-heading">
+    <section class="manifesto" id="manifesto" aria-labelledby="manifesto-heading">
       <div class="manifesto__inner">
         <h2 id="manifesto-heading" class="visually-hidden">Манифест</h2>
         <blockquote class="manifesto__quote">
           Хороший сайт — это не когда «нормально сверстано». Это когда у проекта появляется энергия, форма и ощущение, что он живой.
         </blockquote>
+        <p class="manifesto__action">
+          <a href="#manifesto" class="btn-text btn-text--manifest"><span class="btn-text__spark" aria-hidden="true">✦</span> Читать манифест</a>
+        </p>
       </div>
     </section>
 
@@ -243,8 +246,8 @@
         <h2 class="section__title">Если тебе нужен сайт, который выглядит сильно и ощущается современно — давай соберём</h2>
         <p class="cta__text">Могу помочь с концепцией, структурой, упаковкой и реализацией. От первого вайба до готовой страницы.</p>
         <div class="hero__actions">
-          <a class="btn btn--primary" href="#contact">Написать мне</a>
-          <a class="btn btn--ghost" href="#projects">Посмотреть работы</a>
+          <a class="btn btn--warm" href="#contact"><span class="btn__txt">Написать мне</span></a>
+          <a class="btn btn--secondary" href="#projects"><span class="btn__txt">Посмотреть работы</span></a>
         </div>
       </div>
     </section>
@@ -256,6 +259,12 @@
           <p><a href="https://t.me/yourname">Telegram: @yourname</a></p>
           <p><a href="mailto:hello@yourmail.com">Email: hello@yourmail.com</a></p>
           <p class="contact__socials">Behance / Dribbble / GitHub / Notion / Instagram</p>
+          <p class="contact__cta">
+            <button type="button" class="btn btn--warm" id="contact-send-demo" aria-busy="false">
+              <span class="btn__orbit" aria-hidden="true"></span>
+              <span class="btn__txt btn__copy">Отправить сообщение</span>
+            </button>
+          </p>
         </div>
       </div>
     </section>
@@ -265,7 +274,8 @@
     <p>Vibe Coder · <span id="year"></span></p>
   </footer>
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+  <script src="buttons.js" defer></script>
 </body>
 </html>
