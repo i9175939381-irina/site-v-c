@@ -955,16 +955,20 @@ main > .section:nth-child(even) {
 /* Projects */
 .projects {
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 @media (min-width: 768px) {
   .projects {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+    align-items: stretch;
   }
 }
 
 .project {
+  display: flex;
+  flex-direction: column;
   padding: 1.75rem;
   border-radius: var(--radius-lg);
   background: linear-gradient(145deg, var(--bg-elevated), rgba(8, 40, 44, 0.55));
@@ -987,10 +991,128 @@ main > .section:nth-child(even) {
   margin-bottom: 0.75rem;
 }
 
+/* Единый кадр превью: 16:9, без растягивания — только cover */
+.project__thumb {
+  position: relative;
+  width: 100%;
+  margin: 0 0 1.25rem;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  box-shadow: inset 0 0 0 1px rgba(0, 242, 255, 0.04);
+}
+
+.project__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Карусель: тот же 16:9, что и у одиночного превью */
+.project-gallery {
+  position: relative;
+  margin: 0 0 1.25rem;
+  border-radius: var(--radius);
+}
+
+.project-gallery__viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  box-shadow: inset 0 0 0 1px rgba(0, 242, 255, 0.04);
+}
+
+.project-gallery__track {
+  display: flex;
+  height: 100%;
+  width: calc(100% * var(--slide-count, 2));
+  will-change: transform;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-gallery__slide {
+  flex: 0 0 calc(100% / var(--slide-count, 2));
+  height: 100%;
+  margin: 0;
+}
+
+.project-gallery__chrome {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 42%;
+  z-index: 1;
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: linear-gradient(to top, rgba(5, 18, 21, 0.72), transparent);
+}
+
+.project-gallery__controls {
+  position: absolute;
+  left: 50%;
+  bottom: 0.6rem;
+  z-index: 2;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(8, 32, 36, 0.92);
+  border: 1px solid var(--border-subtle);
+  backdrop-filter: blur(10px);
+}
+
+.project-gallery__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  margin: 0;
+  color: var(--text);
+  background: rgba(0, 242, 255, 0.08);
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.project-gallery__btn:hover {
+  background: var(--accent);
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.project-gallery__btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.project-gallery__counter {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  min-width: 1.75rem;
+  text-align: center;
+}
+
 .project__title {
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 1.25rem;
+  font-family: var(--font-hero-title);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 1.2vw + 0.75rem, 1.35rem);
+  letter-spacing: -0.02em;
   margin: 0 0 0.75rem;
 }
 
@@ -1003,6 +1125,7 @@ main > .section:nth-child(even) {
   margin: 0;
   font-size: 0.92rem;
   color: var(--text-muted);
+  margin-top: auto;
 }
 
 /* Заголовок вне «рамки» — типографика как у .section__title (Инструменты) */

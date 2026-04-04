@@ -269,6 +269,8 @@
         ".contact a",
         ".steps__item",
         ".why__bridge-title",
+        ".project-gallery__btn",
+        ".project__thumb",
       ].join(", ")
     )
     .forEach(function (el) {

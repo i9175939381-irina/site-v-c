@@ -166,30 +166,128 @@
     <section id="projects" class="section section--projects">
       <div class="section__inner">
         <h2 class="section__title section__title--center">Избранные проекты</h2>
-        <p class="section__note">Несколько карточек — можно расширить до 3–6.</p>
+        <p class="section__note">Превью в едином формате: без растягивания, лёгкая обрезка по краям — как в макете.</p>
         <div class="projects">
           <article class="project">
-            <div class="project__meta">01 — digital</div>
-            <h3 class="project__title">AI Landing Experience</h3>
-            <p class="project__desc">Лендинг для digital-продукта с акцентом на атмосферу, скорость восприятия и современный визуал.</p>
+            <div class="project__meta">01 — landing</div>
+            <div class="project__thumb">
+              <img
+                class="project__img"
+                src="images/Практика англ.языка.png"
+                width="960"
+                height="540"
+                alt="Лендинг: практика английского языка, интерфейс FluentBuddy"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <h3 class="project__title">Практика английского</h3>
+            <p class="project__desc">Лендинг под продукт для практики английского: чистый SaaS-визуал, акцент на пользе и CTA.</p>
             <p class="project__done"><strong>Что сделано:</strong> структура, тексты, дизайн-концепция, сборка.</p>
           </article>
           <article class="project">
             <div class="project__meta">02 — portfolio</div>
-            <h3 class="project__title">Portfolio for Creative Expert</h3>
-            <p class="project__desc">Личный сайт-портфолио, который показывает не только кейсы, но и стиль человека.</p>
-            <p class="project__done"><strong>Что сделано:</strong> позиционирование, подача, визуальный ритм, упаковка работ.</p>
+            <div class="project__thumb">
+              <img
+                class="project__img"
+                src="images/Портфолио.png"
+                width="960"
+                height="540"
+                alt="Сайт-портфолио, тёмная тема и сетка работ"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <h3 class="project__title">Портфолио</h3>
+            <p class="project__desc">Личный сайт с сильной подачей работ: фильтры, сетка, аккуратная типографика.</p>
+            <p class="project__done"><strong>Что сделано:</strong> позиционирование, визуальный ритм, упаковка кейсов.</p>
           </article>
           <article class="project">
-            <div class="project__meta">03 — funnel</div>
-            <h3 class="project__title">Bot &amp; Funnel Page</h3>
-            <p class="project__desc">Промо-страница под воронку и digital-продукт с акцентом на конверсию и лёгкость восприятия.</p>
-            <p class="project__done"><strong>Что сделано:</strong> логика блоков, тексты, CTA, визуальный каркас.</p>
+            <div class="project__meta">03 — promo</div>
+            <div class="project-gallery" data-project-gallery style="--slide-count: 2" role="region" aria-roledescription="карусель" aria-label="Скриншоты: бот и презентация для нутрициолога">
+              <div class="project-gallery__viewport">
+                <div class="project-gallery__track" data-gallery-track>
+                  <figure class="project-gallery__slide">
+                    <img
+                      class="project__img"
+                      src="images/Бот-копирайтер.png"
+                      width="960"
+                      height="540"
+                      alt="Telegram-бот копирайтер для канала"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                  <figure class="project-gallery__slide">
+                    <img
+                      class="project__img"
+                      src="images/Маркетинговая стратегия для нутрициолога.png"
+                      width="960"
+                      height="540"
+                      alt="Презентация: маркетинговая стратегия для нутрициолога"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                </div>
+              </div>
+              <div class="project-gallery__chrome" aria-hidden="true"></div>
+              <div class="project-gallery__controls">
+                <button type="button" class="project-gallery__btn" data-gallery-prev aria-label="Предыдущий скриншот">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <span class="project-gallery__counter"><span data-gallery-index>1</span> / 2</span>
+                <button type="button" class="project-gallery__btn" data-gallery-next aria-label="Следующий скриншот">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </div>
+            </div>
+            <h3 class="project__title">Промо и воронки</h3>
+            <p class="project__desc">Telegram-бот под контент и слайд с позиционированием для нутрициолога — два разных формата в одном кейсе.</p>
+            <p class="project__done"><strong>Что сделано:</strong> логика сценариев, тексты, визуальный каркас, CTA.</p>
           </article>
           <article class="project">
             <div class="project__meta">04 — concept</div>
-            <h3 class="project__title">Concept Site for AI Creator</h3>
-            <p class="project__desc">Сайт с упором на трендовую подачу, сильный первый экран и ощущение «это хочется переслать».</p>
+            <div class="project-gallery" data-project-gallery style="--slide-count: 2" role="region" aria-roledescription="карусель" aria-label="Скриншоты: сайт фотографа и лендинг о нейросетях">
+              <div class="project-gallery__viewport">
+                <div class="project-gallery__track" data-gallery-track>
+                  <figure class="project-gallery__slide">
+                    <img
+                      class="project__img"
+                      src="images/Сайт для фотографа.png"
+                      width="960"
+                      height="540"
+                      alt="Концепт сайта фотографа"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                  <figure class="project-gallery__slide">
+                    <img
+                      class="project__img"
+                      src="images/Сайт о нейросетях.png"
+                      width="960"
+                      height="540"
+                      alt="Лендинг про обучение нейросетям"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                </div>
+              </div>
+              <div class="project-gallery__chrome" aria-hidden="true"></div>
+              <div class="project-gallery__controls">
+                <button type="button" class="project-gallery__btn" data-gallery-prev aria-label="Предыдущий скриншот">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <span class="project-gallery__counter"><span data-gallery-index>1</span> / 2</span>
+                <button type="button" class="project-gallery__btn" data-gallery-next aria-label="Следующий скриншот">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </div>
+            </div>
+            <h3 class="project__title">Концепты сайтов</h3>
+            <p class="project__desc">Сайт фотографа и образовательный лендинг о нейросетях — разный контент, единая сетка превью.</p>
             <p class="project__done"><strong>Что сделано:</strong> creative direction, структура, визуальная концепция.</p>
           </article>
         </div>
@@ -348,6 +446,7 @@
   <script src="buttons.js" defer></script>
   <script src="manifesto-type.js" defer></script>
   <script src="testimonials.js" defer></script>
+  <script src="projects-gallery.js" defer></script>
   <script src="target-cursor.js" defer></script>
 </body>
 </html>
