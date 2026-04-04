@@ -1225,6 +1225,41 @@ main > .section:nth-child(even) {
   color: var(--text);
 }
 
+/* Набор текста манифеста (как TextType: контент + мигающий курсор) */
+.manifesto__quote .text-type {
+  display: block;
+  white-space: pre-wrap;
+}
+
+.manifesto__quote .text-type__content {
+  font-style: italic;
+}
+
+.manifesto__quote .text-type__cursor {
+  margin-left: 0.2rem;
+  display: inline-block;
+  font-style: normal;
+  font-weight: 300;
+  color: rgba(0, 242, 255, 0.75);
+  animation: manifesto-cursor-blink 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes manifesto-cursor-blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.15;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manifesto__quote .text-type__cursor {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 /* CTA block */
 .section--cta {
   text-align: center;
