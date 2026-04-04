@@ -1,5 +1,6 @@
 /**
- * Интерактив только для кнопок: мягкий «магнит», след света по курсору, демо loading.
+ * Кнопки: магнит, свет, демо loading.
+ * Блок «Я соединяю»: магнит и смещение подсветки у терминов.
  */
 (function () {
   "use strict";
@@ -78,6 +79,39 @@
     });
   }
 
+  function bindWhyTerms(root) {
+    if (reduceMotion) return;
+
+    var cap = 5;
+
+    root.querySelectorAll("[data-magnetic-term]").forEach(function (el) {
+      function onMove(e) {
+        var r = el.getBoundingClientRect();
+        var tx = ((e.clientX - r.left) / Math.max(r.width, 1)) * 100;
+        var ty = ((e.clientY - r.top) / Math.max(r.height, 1)) * 100;
+        el.style.setProperty("--tx", tx.toFixed(1) + "%");
+        el.style.setProperty("--ty", ty.toFixed(1) + "%");
+
+        var mx = (e.clientX - r.left - r.width / 2) * 0.18;
+        var my = (e.clientY - r.top - r.height / 2) * 0.16;
+        el.style.setProperty("--dx", Math.max(-cap, Math.min(cap, mx)).toFixed(2) + "px");
+        el.style.setProperty("--dy", Math.max(-cap, Math.min(cap, my)).toFixed(2) + "px");
+      }
+
+      function onLeave() {
+        el.style.setProperty("--tx", "50%");
+        el.style.setProperty("--ty", "50%");
+        el.style.setProperty("--dx", "0px");
+        el.style.setProperty("--dy", "0px");
+      }
+
+      el.addEventListener("pointermove", onMove);
+      el.addEventListener("pointerleave", onLeave);
+      el.addEventListener("pointercancel", onLeave);
+    });
+  }
+
   bindMagneticAndGlow(document);
   bindContactDemo();
+  bindWhyTerms(document);
 })();

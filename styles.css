@@ -1007,26 +1007,110 @@ main > .section:nth-child(even) {
 
 .why__bridge {
   margin-top: 2.5rem !important;
-  padding: 1.35rem 1.5rem 1.45rem 1.35rem;
-  font-size: 1.08rem;
-  line-height: 1.55;
-  letter-spacing: 0.02em;
-  color: rgba(220, 248, 250, 0.88);
+  margin-bottom: 0;
+  padding: 1.4rem 1.5rem 1.5rem 1.35rem;
   border-left: 2px solid rgba(0, 242, 255, 0.28);
-  background: linear-gradient(105deg, rgba(0, 242, 255, 0.04), transparent 55%);
+  background: linear-gradient(105deg, rgba(0, 242, 255, 0.05), transparent 58%);
   border-radius: 0 12px 12px 0;
 }
 
-.tagline {
-  display: block;
-  margin-top: 0.75rem;
+.why__bridge-kicker {
+  margin: 0 0 0.85rem;
   font-family: var(--font-mono);
-  font-size: clamp(0.88rem, 1.5vw + 0.55rem, 1.08rem);
+  font-size: 0.7rem;
   font-weight: 500;
-  letter-spacing: 0.1em;
-  line-height: 1.65;
-  color: rgba(210, 255, 252, 0.95);
-  text-shadow: 0 0 28px rgba(0, 242, 255, 0.12);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(0, 242, 255, 0.72);
+  line-height: 1.3;
+}
+
+.why__equation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.5rem;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 1.85vw + 0.45rem, 1.28rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.75;
+  color: rgba(210, 255, 252, 0.92);
+}
+
+.why__plus {
+  flex-shrink: 0;
+  font-weight: 400;
+  font-size: 0.72em;
+  opacity: 0.38;
+  color: rgba(0, 242, 255, 0.65);
+  user-select: none;
+  pointer-events: none;
+  padding: 0 0.05em;
+}
+
+/* Интерактивные термины: подложка-свет + лёгкий магнит (--dx/--ty из JS) */
+.why__term {
+  --tx: 50%;
+  --ty: 50%;
+  --dx: 0px;
+  --dy: 0px;
+  position: relative;
+  display: inline-block;
+  padding: 0.28em 0.55em 0.32em;
+  margin: 0.08em 0;
+  border-radius: 999px;
+  cursor: default;
+  outline: none;
+  isolation: isolate;
+  color: rgba(232, 252, 255, 0.94);
+  text-shadow: 0 0 20px transparent;
+  transform: translate(var(--dx), var(--dy));
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.35s ease,
+    text-shadow 0.35s ease;
+}
+
+.why__term::before {
+  content: "";
+  position: absolute;
+  inset: -0.12em -0.2em;
+  border-radius: inherit;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse 140% 120% at var(--tx) var(--ty),
+    rgba(0, 242, 255, 0.22) 0%,
+    rgba(0, 242, 255, 0.08) 42%,
+    transparent 68%
+  );
+  box-shadow:
+    0 0 24px rgba(0, 242, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  opacity: 0;
+  transform: scale(0.92);
+  transition:
+    opacity 0.4s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.why__term:hover,
+.why__term:focus-visible {
+  color: #f8ffff;
+  text-shadow:
+    0 0 18px rgba(0, 242, 255, 0.35),
+    0 0 36px rgba(0, 242, 255, 0.15);
+}
+
+.why__term:hover::before,
+.why__term:focus-visible::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.why__term:focus-visible {
+  box-shadow: 0 0 0 2px rgba(0, 242, 255, 0.35);
 }
 
 /* Badges */
@@ -1221,5 +1305,13 @@ main > .section:nth-child(even) {
 
   .btn--is-done {
     animation: none;
+  }
+
+  .why__term {
+    transform: none !important;
+  }
+
+  .why__term::before {
+    transition: none;
   }
 }
