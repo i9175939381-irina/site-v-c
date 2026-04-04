@@ -48,6 +48,8 @@
               alt="Портрет: за рабочим столом с ноутбуком и подсветкой кода"
               loading="eager"
               decoding="async"
+              fetchpriority="high"
+              onerror="this.onerror=null;this.src='hero.png';"
             />
           </figure>
         </div>
@@ -197,17 +199,17 @@
     <section id="stack" class="section section--stack">
       <div class="section__inner">
         <h2 class="section__title section__title--center">Инструменты</h2>
-        <div class="badges" role="list">
-          <span class="badge" role="listitem">ChatGPT</span>
-          <span class="badge" role="listitem">Cursor</span>
-          <span class="badge" role="listitem">HTML / CSS / JS</span>
-          <span class="badge" role="listitem">React</span>
-          <span class="badge" role="listitem">Tailwind</span>
-          <span class="badge" role="listitem">Framer Motion</span>
-          <span class="badge" role="listitem">Figma</span>
-          <span class="badge" role="listitem">Tilda / Webflow / custom</span>
-          <span class="badge" role="listitem">Telegram / Bots / AI tools</span>
-        </div>
+        <ul class="badges">
+          <li class="badge">ChatGPT</li>
+          <li class="badge">Cursor</li>
+          <li class="badge">HTML / CSS / JS</li>
+          <li class="badge">React</li>
+          <li class="badge">Tailwind</li>
+          <li class="badge">Framer Motion</li>
+          <li class="badge">Figma</li>
+          <li class="badge">Tilda / Webflow / custom</li>
+          <li class="badge">Telegram / Bots / AI tools</li>
+        </ul>
         <p class="stack__footnote">Но если честно — главный инструмент не стек, а вкус, насмотренность и умение собирать цельное впечатление.</p>
       </div>
     </section>
