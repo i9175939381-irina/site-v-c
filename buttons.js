@@ -5,7 +5,7 @@
   "use strict";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const magneticMax = 5;
+  const magneticMax = 6;
 
   function bindMagneticAndGlow(root) {
     if (reduceMotion) return;
@@ -19,8 +19,9 @@
         el.style.setProperty("--cx", px.toFixed(2) + "%");
         el.style.setProperty("--cy", py.toFixed(2) + "%");
 
-        var mx = (e.clientX - r.left - r.width / 2) * 0.09;
-        var my = (e.clientY - r.top - r.height / 2) * 0.09;
+        var k = el.classList.contains("btn--primary") ? 0.11 : 0.09;
+        var mx = (e.clientX - r.left - r.width / 2) * k;
+        var my = (e.clientY - r.top - r.height / 2) * k;
         el.style.setProperty(
           "--mag-x",
           Math.max(-magneticMax, Math.min(magneticMax, mx)).toFixed(2) + "px"
