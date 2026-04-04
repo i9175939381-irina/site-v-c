@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="testimonials.css" />
   <link rel="stylesheet" href="target-cursor.css" />
 </head>
 <body>
@@ -25,6 +26,7 @@
       <a href="#about">Обо мне</a>
       <a href="#skills">Умения</a>
       <a href="#projects">Проекты</a>
+      <a href="#testimonials">Отзывы</a>
       <a href="#contact" class="nav__cta btn btn--warm btn--compact">
         <svg class="btn__circuit btn__circuit--warm" viewBox="0 0 320 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect class="btn__circuit-rail btn__circuit-rail--warm" x="1.5" y="1.5" width="317" height="49" rx="24.5" />
@@ -194,6 +196,26 @@
       </div>
     </section>
 
+    <section id="testimonials" class="section section--testimonials" aria-labelledby="testimonials-heading">
+      <div class="section__inner">
+        <h2 id="testimonials-heading" class="section__title section__title--center">Отзывы</h2>
+        <p class="section__note">Кто уже работал — коротко о вайбе и результате.</p>
+        <div id="stagger-testimonials" class="stagger-testimonials">
+          <div class="stagger-testimonials__viewport">
+            <div id="stagger-testimonials-cards" class="stagger-testimonials__cards" aria-live="polite"></div>
+            <div class="stagger-testimonials__nav">
+              <button type="button" id="stagger-prev" class="cursor-target" aria-label="Предыдущий отзыв">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <button type="button" id="stagger-next" class="cursor-target" aria-label="Следующий отзыв">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="why" class="section section--why">
       <div class="section__inner section__inner--narrow">
         <h2 class="section__title">Почему ко мне идут не просто за кодом</h2>
@@ -325,6 +347,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="buttons.js" defer></script>
   <script src="manifesto-type.js" defer></script>
+  <script src="testimonials.js" defer></script>
   <script src="target-cursor.js" defer></script>
 </body>
 </html>

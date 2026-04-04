@@ -1,0 +1,176 @@
+/* --- Отзывы (stagger carousel, порт с React) --- */
+.section--testimonials {
+  overflow: hidden;
+}
+
+.stagger-testimonials__viewport {
+  position: relative;
+  width: 100%;
+  max-width: min(100%, 72rem);
+  margin: 0 auto;
+  height: 600px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    165deg,
+    rgba(0, 242, 255, 0.04) 0%,
+    rgba(10, 38, 42, 0.45) 45%,
+    rgba(5, 18, 21, 0.65) 100%
+  );
+  border: 1px solid var(--border-subtle);
+}
+
+.stagger-testimonials__cards {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.stagger-testimonials__card {
+  pointer-events: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  cursor: pointer;
+  border: 2px solid var(--border-strong);
+  padding: 2rem;
+  transition:
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.5s ease,
+    border-color 0.35s ease,
+    background 0.35s ease,
+    color 0.35s ease;
+  z-index: 0;
+  background: var(--bg-card);
+  color: var(--text);
+}
+
+.stagger-testimonials__card:hover {
+  border-color: rgba(0, 242, 255, 0.45);
+}
+
+.stagger-testimonials__card--center {
+  z-index: 10;
+  background: var(--accent);
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.stagger-testimonials__card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.stagger-testimonials__fold {
+  position: absolute;
+  display: block;
+  right: -2px;
+  top: 48px;
+  height: 2px;
+  transform-origin: top right;
+  transform: rotate(45deg);
+  background: rgba(0, 242, 255, 0.25);
+  pointer-events: none;
+}
+
+.stagger-testimonials__card--center .stagger-testimonials__fold {
+  background: rgba(5, 18, 21, 0.35);
+}
+
+.stagger-testimonials__avatar {
+  display: block;
+  width: 48px;
+  height: 56px;
+  margin-bottom: 1rem;
+  object-fit: cover;
+  object-position: top center;
+  background: rgba(0, 242, 255, 0.08);
+  box-shadow: 3px 3px 0 var(--bg-deep);
+}
+
+.stagger-testimonials__card--center .stagger-testimonials__avatar {
+  box-shadow: 3px 3px 0 rgba(5, 18, 21, 0.35);
+}
+
+.stagger-testimonials__quote {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.5vw + 0.75rem, 1.2rem);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.stagger-testimonials__by {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.stagger-testimonials__card--center .stagger-testimonials__by {
+  color: rgba(5, 18, 21, 0.72);
+}
+
+.stagger-testimonials__nav {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 20;
+}
+
+.stagger-testimonials__nav button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--text);
+  background: rgba(10, 38, 42, 0.85);
+  border: 2px solid var(--border-strong);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.stagger-testimonials__nav button:hover {
+  background: var(--accent);
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.stagger-testimonials__nav button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.stagger-testimonials__nav svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+@media (max-width: 639px) {
+  .stagger-testimonials__viewport {
+    height: 600px;
+  }
+
+  .stagger-testimonials__card {
+    padding: 1.5rem;
+  }
+
+  .stagger-testimonials__by {
+    left: 1.5rem;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    font-size: 0.8rem;
+  }
+}
