@@ -1005,8 +1005,24 @@ main > .section:nth-child(even) {
   color: var(--text-muted);
 }
 
+/* Заголовок вне «рамки» — типографика как у .section__title (Инструменты) */
+.prose .why__bridge-title,
+.why__bridge-title {
+  margin: 2.5rem auto 1rem;
+  padding: 0;
+  max-width: 44rem;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  font-size: clamp(1.5rem, 2vw + 1rem, 2.15rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
+  color: var(--text) !important;
+  text-align: center;
+  text-transform: none !important;
+}
+
 .why__bridge {
-  margin-top: 2.5rem !important;
+  margin-top: 0 !important;
   margin-bottom: 0;
   margin-left: auto;
   margin-right: auto;
@@ -1016,17 +1032,6 @@ main > .section:nth-child(even) {
   border-radius: 12px;
   background: radial-gradient(ellipse 85% 90% at 50% 35%, rgba(0, 242, 255, 0.07), transparent 62%),
     rgba(0, 242, 255, 0.03);
-}
-
-.why__bridge-kicker {
-  margin: 0 0 1rem;
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: clamp(1.5rem, 2vw + 1rem, 2.15rem);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--text);
-  text-align: center;
 }
 
 /* Равные «ячейки» под четыре слова; плюсы в узких колонках */
