@@ -383,16 +383,16 @@
     <section class="manifesto" id="manifesto" aria-labelledby="manifesto-heading">
       <div class="manifesto__inner">
         <h2 id="manifesto-heading" class="visually-hidden">Манифест</h2>
-        <blockquote
-          class="manifesto__quote"
-          aria-label="Хороший сайт — это не когда «нормально сверстано». Это когда у проекта появляется энергия, форма и ощущение, что он живой."
-        >
+        <blockquote class="manifesto__quote">
           <span class="text-type" id="manifesto-typewriter" aria-hidden="true">
             <span class="text-type__content"></span><span class="text-type__cursor" aria-hidden="true">_</span>
           </span>
         </blockquote>
+        <span id="manifesto-live" class="visually-hidden" aria-live="polite" aria-atomic="true"></span>
         <p class="manifesto__action">
-          <a href="#manifesto" class="btn-text btn-text--manifest">Читать манифест <span class="btn-text__spark" aria-hidden="true">✦</span></a>
+          <button type="button" id="manifesto-next" class="btn-text btn-text--manifest">
+            Читать манифест <span class="btn-text__spark" aria-hidden="true">✦</span>
+          </button>
         </p>
       </div>
     </section>
