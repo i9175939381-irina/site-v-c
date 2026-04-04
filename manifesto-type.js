@@ -1,5 +1,7 @@
 /**
- * Манифест: набор текста по буквам (как раньше), части переключаются каруселью по клику «Читать манифест».
+ * Манифест: набор текста по буквам; части переключаются по клику «Читать манифест».
+ * Клик — через делегирование (capture), чтобы не терялся из‑за перекрытий / порядка обработчиков.
+ * IntersectionObserver на секции #manifesto — у пустого #manifesto-typewriter могла быть нулевая высота.
  */
 (function () {
   "use strict";
@@ -14,9 +16,10 @@
   var typingSpeed = 75;
   var initialDelay = 400;
 
+  var section = document.getElementById("manifesto");
   var root = document.getElementById("manifesto-typewriter");
-  var btn = document.getElementById("manifesto-next");
   var live = document.getElementById("manifesto-live");
+
   if (!root) return;
 
   var contentEl = root.querySelector(".text-type__content");
@@ -43,7 +46,7 @@
     if (live) live.textContent = PARTS[index];
   }
 
-  function setAria() {
+  function setAria(btn) {
     if (!btn) return;
     if (!started) {
       btn.setAttribute("aria-label", "Читать манифест");
@@ -81,28 +84,39 @@
     if (live) live.textContent = "";
 
     timer = window.setTimeout(typeNext, initialDelay);
-    setAria();
-  }
-
-  if (reduceMotion) {
-    started = true;
-    currentIndex = 0;
-    showSlideFull(0);
-    setAria();
-    if (btn) {
-      btn.addEventListener("click", function () {
-        currentIndex = (currentIndex + 1) % PARTS.length;
-        showSlideFull(currentIndex);
-        setAria();
-      });
-    }
-    return;
+    var btn = document.getElementById("manifesto-next");
+    setAria(btn);
   }
 
   function beginFirstPart() {
     if (started) return;
     started = true;
     startTyping(0);
+  }
+
+  function onManifestoControlClick(e) {
+    var btn = document.getElementById("manifesto-next");
+    if (!btn) return;
+    var t = e.target;
+    if (t.nodeType !== 1) t = t.parentElement;
+    if (!t || !btn.contains(t)) return;
+
+    if (!started) {
+      beginFirstPart();
+      return;
+    }
+    var next = (currentIndex + 1) % PARTS.length;
+    startTyping(next);
+  }
+
+  if (reduceMotion) {
+    started = true;
+    currentIndex = 0;
+    showSlideFull(0);
+    var btnRm = document.getElementById("manifesto-next");
+    setAria(btnRm);
+    document.addEventListener("click", onManifestoControlClick, true);
+    return;
   }
 
   var io = new IntersectionObserver(
@@ -113,22 +127,17 @@
         beginFirstPart();
       });
     },
-    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    { threshold: 0.08, rootMargin: "0px 0px -5% 0px" }
   );
 
-  io.observe(root);
-
-  if (btn) {
-    btn.addEventListener("click", function (e) {
-      e.preventDefault();
-      if (!started) {
-        beginFirstPart();
-        return;
-      }
-      var next = (currentIndex + 1) % PARTS.length;
-      startTyping(next);
-    });
+  if (section) {
+    io.observe(section);
+  } else {
+    io.observe(root);
   }
 
-  setAria();
+  document.addEventListener("click", onManifestoControlClick, true);
+
+  var btnInit = document.getElementById("manifesto-next");
+  setAria(btnInit);
 })();
