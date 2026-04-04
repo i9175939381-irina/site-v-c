@@ -8,9 +8,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="target-cursor.css" />
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
+  <div id="target-cursor" class="target-cursor-wrapper" aria-hidden="true">
+    <div class="target-cursor-dot"></div>
+    <div class="target-cursor-corner corner-tl"></div>
+    <div class="target-cursor-corner corner-tr"></div>
+    <div class="target-cursor-corner corner-br"></div>
+    <div class="target-cursor-corner corner-bl"></div>
+  </div>
   <header class="site-header">
     <a class="logo" href="#top">VC</a>
     <nav class="nav" aria-label="Навигация по странице">
@@ -314,7 +322,9 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="buttons.js" defer></script>
   <script src="manifesto-type.js" defer></script>
+  <script src="target-cursor.js" defer></script>
 </body>
 </html>
