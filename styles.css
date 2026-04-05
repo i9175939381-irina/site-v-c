@@ -847,39 +847,6 @@ main > .section:nth-child(even) {
   padding-left: 1.25rem;
 }
 
-.about__label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-top: 1.5rem !important;
-}
-
-.about__list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 1.5rem;
-  display: grid;
-  gap: 0.35rem;
-}
-
-.about__list li {
-  position: relative;
-  padding-left: 1.25rem;
-  color: var(--text-muted);
-}
-
-.about__list li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.65em;
-  width: 6px;
-  height: 1px;
-  background: var(--accent);
-}
-
 /* Cards */
 .cards {
   display: grid;
@@ -914,6 +881,78 @@ main > .section:nth-child(even) {
   margin: 0;
   color: var(--text-muted);
   font-size: 0.98rem;
+}
+
+/* Карточки с магнитом и подсветкой (как термины в «Я соединяю») */
+.card.card--magnetic {
+  --tx: 50%;
+  --ty: 50%;
+  --dx: 0px;
+  --dy: 0px;
+  position: relative;
+  isolation: isolate;
+  cursor: default;
+  outline: none;
+  transform: translate(var(--dx), var(--dy));
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease,
+    box-shadow 0.35s ease;
+}
+
+.card.card--magnetic::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse 140% 120% at var(--tx) var(--ty),
+    rgba(0, 242, 255, 0.2) 0%,
+    rgba(0, 242, 255, 0.07) 42%,
+    transparent 68%
+  );
+  box-shadow:
+    0 0 28px rgba(0, 242, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  opacity: 0;
+  transform: scale(0.96);
+  transition:
+    opacity 0.4s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.card.card--magnetic:hover::before,
+.card.card--magnetic:focus-visible::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card.card--magnetic:hover,
+.card.card--magnetic:focus-visible {
+  border-color: rgba(0, 242, 255, 0.38);
+  transform: translate(var(--dx), var(--dy));
+  box-shadow:
+    0 24px 48px -28px rgba(0, 0, 0, 0.75),
+    0 0 44px -10px rgba(0, 242, 255, 0.14);
+}
+
+.card.card--magnetic:focus-visible {
+  box-shadow:
+    0 0 0 2px rgba(0, 242, 255, 0.3),
+    0 24px 48px -28px rgba(0, 0, 0, 0.75),
+    0 0 44px -10px rgba(0, 242, 255, 0.14);
+}
+
+.card.card--magnetic .card__text--line {
+  color: var(--text);
+  font-size: 1.02rem;
+  line-height: 1.45;
+}
+
+.section--benefits .cards {
+  gap: 1rem;
 }
 
 /* Steps */
@@ -1507,5 +1546,22 @@ main > .section:nth-child(even) {
 
   .why__term::before {
     transition: none;
+  }
+
+  .card.card--magnetic,
+  .card.card--magnetic:hover,
+  .card.card--magnetic:focus-visible {
+    transform: none !important;
+  }
+
+  .card.card--magnetic::before {
+    transition: none;
+    opacity: 0;
+  }
+
+  .card.card--magnetic:hover::before,
+  .card.card--magnetic:focus-visible::before {
+    opacity: 0.85;
+    transform: scale(1);
   }
 }
