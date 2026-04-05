@@ -267,8 +267,9 @@
         ".why__term",
         ".btn-text",
         ".contact a",
-        ".steps__item",
         ".why__bridge-title",
+        ".pitch__hook",
+        ".pitch__finale",
         ".project-gallery__btn",
         ".project__thumb",
       ].join(", ")
