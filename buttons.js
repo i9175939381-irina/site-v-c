@@ -1,6 +1,7 @@
 /**
  * Кнопки: магнит, свет, демо loading.
  * Блок «Я соединяю»: магнит и смещение подсветки у терминов.
+ * Модальное окно «Написать мне» (CTA).
  */
 (function () {
   "use strict";
@@ -46,12 +47,94 @@
     });
   }
 
-  /** Форма контактов: открытие почтового клиента с mailto (статический сайт без бэкенда). */
-  function bindContactMailForm() {
-    var form = document.getElementById("contact-mail-form");
-    if (!form) return;
+  function bindContactDemo() {
+    var demo = document.getElementById("contact-send-demo");
+    if (!demo) return;
 
-    var TO = "irana0408@yandex.ru";
+    var copy = demo.querySelector(".btn__copy");
+    var idleText = copy ? copy.textContent.trim() : "";
+
+    demo.addEventListener("click", function () {
+      if (
+        demo.classList.contains("btn--is-loading") ||
+        demo.classList.contains("btn--is-done")
+      ) {
+        return;
+      }
+
+      demo.classList.add("btn--is-loading");
+      demo.setAttribute("aria-busy", "true");
+      if (copy) copy.textContent = "Принимаю…";
+
+      window.setTimeout(function () {
+        demo.classList.remove("btn--is-loading");
+        demo.classList.add("btn--is-done");
+        demo.setAttribute("aria-busy", "false");
+        if (copy) copy.textContent = "Принято";
+
+        window.setTimeout(function () {
+          demo.classList.remove("btn--is-done");
+          if (copy) copy.textContent = idleText;
+        }, 2000);
+      }, reduceMotion ? 900 : 2200);
+    });
+  }
+
+  function bindContactModal() {
+    var modal = document.getElementById("contact-modal");
+    var form = document.getElementById("contact-modal-form");
+    var success = document.getElementById("contact-modal-success");
+    if (!modal || !form) return;
+
+    var backdrop = modal.querySelector(".contact-modal__backdrop");
+    var closeBtn = modal.querySelector(".contact-modal__close");
+    var successClose = modal.querySelector(".contact-modal__success-close");
+    var firstInput = document.getElementById("modal-name");
+
+    function openModal() {
+      modal.classList.add("contact-modal--open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      if (firstInput) {
+        window.setTimeout(function () {
+          firstInput.focus();
+        }, 100);
+      }
+    }
+
+    function closeModal() {
+      modal.classList.remove("contact-modal--open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      form.reset();
+      form.hidden = false;
+      if (success) {
+        success.hidden = true;
+      }
+    }
+
+    document.querySelectorAll(".js-open-contact-modal").forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        openModal();
+      });
+    });
+
+    if (backdrop) {
+      backdrop.addEventListener("click", closeModal);
+    }
+    if (closeBtn) {
+      closeBtn.addEventListener("click", closeModal);
+    }
+    if (successClose) {
+      successClose.addEventListener("click", closeModal);
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && modal.classList.contains("contact-modal--open")) {
+        closeModal();
+      }
+    });
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -59,31 +142,12 @@
         form.reportValidity();
         return;
       }
-
-      var nameEl = form.querySelector('[name="name"]');
-      var emailEl = form.querySelector('[name="email"]');
-      var msgEl = form.querySelector('[name="message"]');
-      var name = nameEl ? nameEl.value.trim() : "";
-      var email = emailEl ? emailEl.value.trim() : "";
-      var message = msgEl ? msgEl.value.trim() : "";
-
-      var subject = "Сообщение с сайта Vibe Coder";
-      if (name) subject += " — " + name;
-
-      var body = "";
-      if (name) body += "Имя: " + name + "\n";
-      body += "Email для ответа: " + email + "\n\n";
-      body += "Сообщение:\n" + message;
-
-      var mailto =
-        "mailto:" +
-        TO +
-        "?subject=" +
-        encodeURIComponent(subject) +
-        "&body=" +
-        encodeURIComponent(body);
-
-      window.location.href = mailto;
+      form.hidden = true;
+      if (success) {
+        success.hidden = false;
+        var okBtn = success.querySelector(".contact-modal__success-close");
+        if (okBtn) okBtn.focus();
+      }
     });
   }
 
@@ -120,6 +184,7 @@
   }
 
   bindMagneticAndGlow(document);
-  bindContactMailForm();
+  bindContactDemo();
+  bindContactModal();
   bindWhyTerms(document);
 })();
