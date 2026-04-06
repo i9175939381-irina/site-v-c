@@ -80,21 +80,35 @@
 
   function bindContactModal() {
     var modal = document.getElementById("contact-modal");
-    if (!modal) return;
+    var form = document.getElementById("contact-modal-form");
+    var success = document.getElementById("contact-modal-success");
+    if (!modal || !form) return;
 
     var backdrop = modal.querySelector(".contact-modal__backdrop");
     var closeBtn = modal.querySelector(".contact-modal__close");
+    var successClose = modal.querySelector(".contact-modal__success-close");
+    var firstInput = document.getElementById("modal-name");
 
     function openModal() {
       modal.classList.add("contact-modal--open");
       modal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
+      if (firstInput) {
+        window.setTimeout(function () {
+          firstInput.focus();
+        }, 100);
+      }
     }
 
     function closeModal() {
       modal.classList.remove("contact-modal--open");
       modal.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
+      form.reset();
+      form.hidden = false;
+      if (success) {
+        success.hidden = true;
+      }
     }
 
     document.addEventListener("click", function (e) {
@@ -110,10 +124,29 @@
     if (closeBtn) {
       closeBtn.addEventListener("click", closeModal);
     }
+    if (successClose) {
+      successClose.addEventListener("click", closeModal);
+    }
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && modal.classList.contains("contact-modal--open")) {
         closeModal();
+      }
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      form.hidden = true;
+      if (success) {
+        success.hidden = false;
+        var okBtn = success.querySelector(".contact-modal__success-close");
+        if (okBtn) {
+          okBtn.focus();
+        }
       }
     });
   }

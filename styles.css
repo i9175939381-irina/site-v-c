@@ -1638,6 +1638,8 @@ main > .section:nth-child(even) {
   z-index: 2;
   width: 100%;
   max-width: 30rem;
+  max-height: min(90vh, 40rem);
+  overflow-y: auto;
   border-radius: var(--radius-lg);
   padding: 1.5rem;
   background: linear-gradient(155deg, rgba(16, 52, 56, 0.98), rgba(8, 32, 36, 0.96));
@@ -1682,10 +1684,94 @@ main > .section:nth-child(even) {
   color: var(--text-muted);
 }
 
-.contact-modal__links {
+.contact-modal__form {
+  margin: 0;
+}
+
+.contact-modal__field {
+  margin-bottom: 1rem;
+}
+
+.contact-modal__label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.contact-modal__input {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text);
+  background: rgba(10, 38, 42, 0.65);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-modal__input::placeholder {
+  color: rgba(196, 240, 245, 0.35);
+}
+
+.contact-modal__input:hover {
+  border-color: rgba(0, 242, 255, 0.35);
+}
+
+.contact-modal__input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(0, 242, 255, 0.25);
+}
+
+.contact-modal__consent {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin: 1rem 0 1.25rem;
+  cursor: pointer;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.contact-modal__checkbox {
+  flex-shrink: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.15rem;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.contact-modal__consent-text {
+  user-select: none;
+}
+
+.contact-modal__submit {
+  width: 100%;
+  justify-content: center;
+}
+
+.contact-modal__success {
+  text-align: center;
+  padding: 0.5rem 0 0;
+}
+
+.contact-modal__success-lead {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.contact-modal__success .btn {
+  width: 100%;
+  justify-content: center;
 }
 
 .site-footer {
