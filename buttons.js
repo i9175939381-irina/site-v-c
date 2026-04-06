@@ -78,6 +78,47 @@
     });
   }
 
+  function bindContactModal() {
+    var modal = document.getElementById("contact-modal");
+    if (!modal) return;
+
+    var backdrop = modal.querySelector(".contact-modal__backdrop");
+    var closeBtn = modal.querySelector(".contact-modal__close");
+
+    function openModal() {
+      modal.classList.add("contact-modal--open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      modal.classList.remove("contact-modal--open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    document.addEventListener("click", function (e) {
+      var opener = e.target.closest && e.target.closest(".js-open-contact-modal");
+      if (!opener) return;
+      e.preventDefault();
+      openModal();
+    });
+
+    if (backdrop) {
+      backdrop.addEventListener("click", closeModal);
+    }
+    if (closeBtn) {
+      closeBtn.addEventListener("click", closeModal);
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && modal.classList.contains("contact-modal--open")) {
+        closeModal();
+      }
+    });
+  }
+
   bindMagneticAndGlow(document);
   bindWhyTerms(document);
+  bindContactModal();
 })();

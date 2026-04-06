@@ -267,6 +267,8 @@
         ".why__term",
         ".btn-text",
         ".contact-links a",
+        ".contact-modal__close",
+        ".contact-modal__panel",
         ".why__bridge-title",
         ".pitch__hook",
         ".pitch__finale",
