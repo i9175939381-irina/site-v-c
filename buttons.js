@@ -1,7 +1,6 @@
 /**
- * Кнопки: магнит, свет, демо loading.
+ * Кнопки: магнит и подсветка по контуру.
  * Блок «Я соединяю»: магнит и смещение подсветки у терминов.
- * Модальное окно «Написать мне» (CTA).
  */
 (function () {
   "use strict";
@@ -47,114 +46,6 @@
     });
   }
 
-  function bindContactDemo() {
-    var demo = document.getElementById("contact-send-demo");
-    if (!demo) return;
-
-    var copy = demo.querySelector(".btn__copy");
-    var idleText = copy ? copy.textContent.trim() : "";
-
-    demo.addEventListener("click", function () {
-      if (
-        demo.classList.contains("btn--is-loading") ||
-        demo.classList.contains("btn--is-done")
-      ) {
-        return;
-      }
-
-      demo.classList.add("btn--is-loading");
-      demo.setAttribute("aria-busy", "true");
-      if (copy) copy.textContent = "Принимаю…";
-
-      window.setTimeout(function () {
-        demo.classList.remove("btn--is-loading");
-        demo.classList.add("btn--is-done");
-        demo.setAttribute("aria-busy", "false");
-        if (copy) copy.textContent = "Принято";
-
-        window.setTimeout(function () {
-          demo.classList.remove("btn--is-done");
-          if (copy) copy.textContent = idleText;
-        }, 2000);
-      }, reduceMotion ? 900 : 2200);
-    });
-  }
-
-  function bindContactModal() {
-    var modal = document.getElementById("contact-modal");
-    var form = document.getElementById("contact-modal-form");
-    var success = document.getElementById("contact-modal-success");
-    if (!modal || !form) return;
-
-    var backdrop = modal.querySelector(".contact-modal__backdrop");
-    var closeBtn = modal.querySelector(".contact-modal__close");
-    var successClose = modal.querySelector(".contact-modal__success-close");
-    var firstInput = document.getElementById("modal-name");
-
-    function openModal() {
-      modal.classList.add("contact-modal--open");
-      modal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-      if (firstInput) {
-        window.setTimeout(function () {
-          firstInput.focus();
-        }, 100);
-      }
-    }
-
-    function closeModal() {
-      modal.classList.remove("contact-modal--open");
-      modal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-      form.reset();
-      form.hidden = false;
-      if (success) {
-        success.hidden = true;
-      }
-    }
-
-    document.addEventListener(
-      "click",
-      function (e) {
-        var opener = e.target.closest && e.target.closest(".js-open-contact-modal");
-        if (!opener) return;
-        e.preventDefault();
-        openModal();
-      },
-      true
-    );
-
-    if (backdrop) {
-      backdrop.addEventListener("click", closeModal);
-    }
-    if (closeBtn) {
-      closeBtn.addEventListener("click", closeModal);
-    }
-    if (successClose) {
-      successClose.addEventListener("click", closeModal);
-    }
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && modal.classList.contains("contact-modal--open")) {
-        closeModal();
-      }
-    });
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-      form.hidden = true;
-      if (success) {
-        success.hidden = false;
-        var okBtn = success.querySelector(".contact-modal__success-close");
-        if (okBtn) okBtn.focus();
-      }
-    });
-  }
-
   function bindWhyTerms(root) {
     if (reduceMotion) return;
 
@@ -188,7 +79,5 @@
   }
 
   bindMagneticAndGlow(document);
-  bindContactDemo();
-  bindContactModal();
   bindWhyTerms(document);
 })();

@@ -266,12 +266,10 @@
         ".audience li",
         ".why__term",
         ".btn-text",
-        ".contact a",
+        ".contact-links a",
         ".why__bridge-title",
         ".pitch__hook",
         ".pitch__finale",
-        ".contact-modal__close",
-        ".contact-modal__panel",
         ".project-gallery__btn",
         ".project__thumb",
       ].join(", ")
