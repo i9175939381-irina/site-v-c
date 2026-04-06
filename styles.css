@@ -16,8 +16,8 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   /* hero title — зафиксировано */
   --font-hero-title: "Syne", system-ui, sans-serif;
-  /* имя под фото — итальянский акцент, «перо» */
-  --font-hero-name: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  /* имя под фото — рукопись с кириллицей (не грузный serif) */
+  --font-hero-name: "Marck Script", "Segoe Script", "Brush Script MT", cursive;
   --radius: 14px;
   --radius-lg: 22px;
   --space: clamp(1rem, 3vw, 2rem);
@@ -229,21 +229,31 @@ a:hover {
 }
 
 .hero__name {
+  position: relative;
+  z-index: 2;
   margin: clamp(1.1rem, 2.8vw, 1.85rem) 0 0;
-  padding: 0;
+  padding: 0.5rem 0.75rem 0.75rem;
   width: 100%;
   text-align: center;
   font-family: var(--font-hero-name);
-  font-weight: 600;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
   /* как у заголовка «Я делаю сайты…» */
   font-size: clamp(1.85rem, 4.2vw + 0.6rem, 3.35rem);
-  line-height: 1.12;
-  letter-spacing: 0.01em;
-  font-style: italic;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
   color: #eaffff;
   text-shadow:
     0 0 36px rgba(0, 242, 255, 0.22),
     0 0 72px rgba(0, 242, 255, 0.1);
+}
+
+.hero__name .hero__name-line,
+.hero__name .hero__name-char {
+  font-family: inherit;
+  font-weight: inherit;
+  font-style: inherit;
 }
 
 .hero__name-fallback .hero__name-line,
@@ -262,8 +272,11 @@ a:hover {
 
 .hero__name-char {
   display: inline-block;
-  transform-origin: 50% 75%;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: 50% 80%;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero__name--interactive .hero__name-char {
   will-change: transform;
 }
 
