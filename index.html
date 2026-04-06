@@ -199,7 +199,6 @@
     <section id="projects" class="section section--projects">
       <div class="section__inner">
         <h2 class="section__title section__title--center">Избранные проекты</h2>
-        <p class="section__note">Превью в едином формате: без растягивания, лёгкая обрезка по краям — как в макете.</p>
         <div class="projects">
           <article class="project">
             <div class="project__meta">01 — landing</div>
@@ -454,16 +453,31 @@
           <p><a href="https://t.me/FilatovaII">Telegram: @FilatovaII</a></p>
           <p><a href="mailto:irana0408@yandex.ru">Email: irana0408@yandex.ru</a></p>
           <p class="contact__socials">Behance / Dribbble / GitHub / Notion / Instagram</p>
-          <p class="contact__cta">
-            <button type="button" class="btn btn--warm" id="contact-send-demo" aria-busy="false">
-              <svg class="btn__circuit btn__circuit--warm" viewBox="0 0 320 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect class="btn__circuit-rail btn__circuit-rail--warm" x="1.5" y="1.5" width="317" height="49" rx="24.5" />
-                <rect class="btn__circuit-pulse btn__circuit-pulse--warm" x="1.5" y="1.5" width="317" height="49" rx="24.5" pathLength="100" />
-              </svg>
-              <span class="btn__orbit" aria-hidden="true"></span>
-              <span class="btn__txt btn__copy">Отправить сообщение</span>
-            </button>
-          </p>
+          <form class="contact__form" id="contact-mail-form">
+            <div class="contact__field">
+              <label class="contact__label" for="contact-name">Имя</label>
+              <input class="contact__input" id="contact-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться" />
+            </div>
+            <div class="contact__field">
+              <label class="contact__label" for="contact-email">Ваш email <abbr class="contact__req" title="обязательно">*</abbr></label>
+              <input class="contact__input" id="contact-email" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="name@example.com" />
+            </div>
+            <div class="contact__field">
+              <label class="contact__label" for="contact-msg">Сообщение <abbr class="contact__req" title="обязательно">*</abbr></label>
+              <textarea class="contact__textarea" id="contact-msg" name="message" required rows="5" placeholder="Кратко опишите задачу или вопрос"></textarea>
+            </div>
+            <p class="contact__hint">После нажатия откроется почта на устройстве — письмо будет адресовано на <strong>irana0408@yandex.ru</strong>. При необходимости отправьте его вручную.</p>
+            <div class="contact__cta">
+              <button type="submit" class="btn btn--warm" id="contact-send-submit">
+                <svg class="btn__circuit btn__circuit--warm" viewBox="0 0 320 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect class="btn__circuit-rail btn__circuit-rail--warm" x="1.5" y="1.5" width="317" height="49" rx="24.5" />
+                  <rect class="btn__circuit-pulse btn__circuit-pulse--warm" x="1.5" y="1.5" width="317" height="49" rx="24.5" pathLength="100" />
+                </svg>
+                <span class="btn__orbit" aria-hidden="true"></span>
+                <span class="btn__txt">Отправить сообщение</span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </section>

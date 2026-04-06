@@ -46,36 +46,44 @@
     });
   }
 
-  function bindContactDemo() {
-    var demo = document.getElementById("contact-send-demo");
-    if (!demo) return;
+  /** Форма контактов: открытие почтового клиента с mailto (статический сайт без бэкенда). */
+  function bindContactMailForm() {
+    var form = document.getElementById("contact-mail-form");
+    if (!form) return;
 
-    var copy = demo.querySelector(".btn__copy");
-    var idleText = copy ? copy.textContent.trim() : "";
+    var TO = "irana0408@yandex.ru";
 
-    demo.addEventListener("click", function () {
-      if (
-        demo.classList.contains("btn--is-loading") ||
-        demo.classList.contains("btn--is-done")
-      ) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
         return;
       }
 
-      demo.classList.add("btn--is-loading");
-      demo.setAttribute("aria-busy", "true");
-      if (copy) copy.textContent = "Принимаю…";
+      var nameEl = form.querySelector('[name="name"]');
+      var emailEl = form.querySelector('[name="email"]');
+      var msgEl = form.querySelector('[name="message"]');
+      var name = nameEl ? nameEl.value.trim() : "";
+      var email = emailEl ? emailEl.value.trim() : "";
+      var message = msgEl ? msgEl.value.trim() : "";
 
-      window.setTimeout(function () {
-        demo.classList.remove("btn--is-loading");
-        demo.classList.add("btn--is-done");
-        demo.setAttribute("aria-busy", "false");
-        if (copy) copy.textContent = "Принято";
+      var subject = "Сообщение с сайта Vibe Coder";
+      if (name) subject += " — " + name;
 
-        window.setTimeout(function () {
-          demo.classList.remove("btn--is-done");
-          if (copy) copy.textContent = idleText;
-        }, 2000);
-      }, reduceMotion ? 900 : 2200);
+      var body = "";
+      if (name) body += "Имя: " + name + "\n";
+      body += "Email для ответа: " + email + "\n\n";
+      body += "Сообщение:\n" + message;
+
+      var mailto =
+        "mailto:" +
+        TO +
+        "?subject=" +
+        encodeURIComponent(subject) +
+        "&body=" +
+        encodeURIComponent(body);
+
+      window.location.href = mailto;
     });
   }
 
@@ -112,6 +120,6 @@
   }
 
   bindMagneticAndGlow(document);
-  bindContactDemo();
+  bindContactMailForm();
   bindWhyTerms(document);
 })();
