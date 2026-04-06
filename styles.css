@@ -16,8 +16,7 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   /* hero title — зафиксировано */
   --font-hero-title: "Syne", system-ui, sans-serif;
-  /* имя под фото — рукопись с кириллицей (не грузный serif) */
-  --font-hero-name: "Marck Script", "Segoe Script", "Brush Script MT", cursive;
+  --font-hero-name: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --radius: 14px;
   --radius-lg: 22px;
   --space: clamp(1rem, 3vw, 2rem);
@@ -228,62 +227,38 @@ a:hover {
   background: rgba(5, 20, 22, 0.5);
 }
 
-.hero__name {
+/* Имя под фото — курсив Cormorant Garamond (естественный наклон шрифта, не «наклонённый прямой») */
+.hero__name.name {
   position: relative;
   z-index: 2;
-  margin: clamp(1.1rem, 2.8vw, 1.85rem) 0 0;
-  padding: 0.5rem 0.75rem 0.75rem;
+  margin: clamp(1rem, 2.5vw, 1.5rem) 0 0;
+  padding: 0;
   width: 100%;
+  max-width: 100%;
   text-align: center;
   font-family: var(--font-hero-name);
-  font-weight: 400;
-  font-style: normal;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 60px;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
   font-synthesis: none;
-  /* как у заголовка «Я делаю сайты…» */
-  font-size: clamp(1.85rem, 4.2vw + 0.6rem, 3.35rem);
-  line-height: 1.15;
-  letter-spacing: 0.02em;
-  color: #eaffff;
-  text-shadow:
-    0 0 36px rgba(0, 242, 255, 0.22),
-    0 0 72px rgba(0, 242, 255, 0.1);
+  color: rgba(234, 255, 255, 0.92);
+  text-shadow: 0 0 28px rgba(0, 242, 255, 0.12);
 }
 
-.hero__name .hero__name-line,
-.hero__name .hero__name-char {
+.hero__name .hero__name-line {
+  display: block;
   font-family: inherit;
-  font-weight: inherit;
   font-style: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
 }
 
-.hero__name-fallback .hero__name-line,
-.hero__name-lines .hero__name-line {
-  display: block;
-}
-
-.hero__name-fallback .hero__name-line + .hero__name-line,
-.hero__name-lines .hero__name-line + .hero__name-line {
-  margin-top: 0.06em;
-}
-
-.hero__name-lines {
-  display: block;
-}
-
-.hero__name-char {
-  display: inline-block;
-  transform-origin: 50% 80%;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.hero__name--interactive .hero__name-char {
-  will-change: transform;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero__name-char {
-    transition: none;
-  }
+.hero__name .hero__name-line + .hero__name-line {
+  margin-top: 0;
 }
 
 .hero__deco {
