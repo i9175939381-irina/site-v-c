@@ -6,7 +6,7 @@
   <title>Vibe Coder — портфолио</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="testimonials.css" />
   <link rel="stylesheet" href="target-cursor.css" />
@@ -129,9 +129,17 @@
               onerror="this.onerror=null;this.src='hero.png';"
             />
           </figure>
-          <p class="hero__name animate-in" style="--d: 180ms" aria-label="Ирина Филатова">
-            <span class="hero__name-line">Ирина</span>
-            <span class="hero__name-line">Филатова</span>
+          <p
+            class="hero__name animate-in"
+            data-hero-name
+            data-hero-name-lines="Ирина|Филатова"
+            style="--d: 180ms"
+          >
+            <span class="visually-hidden">Ирина Филатова</span>
+            <span class="hero__name-fallback" aria-hidden="true">
+              <span class="hero__name-line">Ирина</span>
+              <span class="hero__name-line">Филатова</span>
+            </span>
           </p>
         </div>
       </div>
@@ -553,6 +561,7 @@
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="hero-name.js" defer></script>
   <script src="buttons.js" defer></script>
   <script src="manifesto-type.js" defer></script>
   <script src="testimonials.js" defer></script>

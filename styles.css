@@ -16,6 +16,8 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   /* hero title — зафиксировано */
   --font-hero-title: "Syne", system-ui, sans-serif;
+  /* имя под фото — итальянский акцент, «перо» */
+  --font-hero-name: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --radius: 14px;
   --radius-lg: 22px;
   --space: clamp(1rem, 3vw, 2rem);
@@ -231,24 +233,44 @@ a:hover {
   padding: 0;
   width: 100%;
   text-align: center;
-  font-family: var(--font-hero-title);
-  font-weight: 800;
-  font-size: clamp(1.95rem, 4.2vw + 0.55rem, 3.25rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  font-style: normal;
+  font-family: var(--font-hero-name);
+  font-weight: 600;
+  /* как у заголовка «Я делаю сайты…» */
+  font-size: clamp(1.85rem, 4.2vw + 0.6rem, 3.35rem);
+  line-height: 1.12;
+  letter-spacing: 0.01em;
+  font-style: italic;
   color: #eaffff;
   text-shadow:
-    0 0 52px rgba(0, 242, 255, 0.28),
-    0 0 100px rgba(0, 242, 255, 0.12);
+    0 0 36px rgba(0, 242, 255, 0.22),
+    0 0 72px rgba(0, 242, 255, 0.1);
 }
 
-.hero__name-line {
+.hero__name-fallback .hero__name-line,
+.hero__name-lines .hero__name-line {
   display: block;
 }
 
-.hero__name-line + .hero__name-line {
-  margin-top: 0.08em;
+.hero__name-fallback .hero__name-line + .hero__name-line,
+.hero__name-lines .hero__name-line + .hero__name-line {
+  margin-top: 0.06em;
+}
+
+.hero__name-lines {
+  display: block;
+}
+
+.hero__name-char {
+  display: inline-block;
+  transform-origin: 50% 75%;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__name-char {
+    transition: none;
+  }
 }
 
 .hero__deco {
