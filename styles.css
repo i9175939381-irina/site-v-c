@@ -181,6 +181,9 @@ a:hover {
   justify-self: center;
   width: 100%;
   max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 @media (min-width: 960px) {
@@ -221,6 +224,31 @@ a:hover {
     0 0 100px -20px rgba(0, 242, 255, 0.25);
   object-fit: cover;
   background: rgba(5, 20, 22, 0.5);
+}
+
+.hero__name {
+  margin: clamp(1.1rem, 2.8vw, 1.85rem) 0 0;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-hero-title);
+  font-weight: 800;
+  font-size: clamp(1.95rem, 4.2vw + 0.55rem, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-style: normal;
+  color: #eaffff;
+  text-shadow:
+    0 0 52px rgba(0, 242, 255, 0.28),
+    0 0 100px rgba(0, 242, 255, 0.12);
+}
+
+.hero__name-line {
+  display: block;
+}
+
+.hero__name-line + .hero__name-line {
+  margin-top: 0.08em;
 }
 
 .hero__deco {
