@@ -113,12 +113,16 @@
       }
     }
 
-    document.querySelectorAll(".js-open-contact-modal").forEach(function (link) {
-      link.addEventListener("click", function (e) {
+    document.addEventListener(
+      "click",
+      function (e) {
+        var opener = e.target.closest && e.target.closest(".js-open-contact-modal");
+        if (!opener) return;
         e.preventDefault();
         openModal();
-      });
-    });
+      },
+      true
+    );
 
     if (backdrop) {
       backdrop.addEventListener("click", closeModal);

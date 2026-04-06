@@ -20,6 +20,57 @@
     <div class="target-cursor-corner corner-br"></div>
     <div class="target-cursor-corner corner-bl"></div>
   </div>
+
+  <div
+    id="contact-modal"
+    class="contact-modal"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="contact-modal-title"
+  >
+    <div class="contact-modal__backdrop" aria-hidden="true"></div>
+    <div class="contact-modal__panel">
+      <button type="button" class="contact-modal__close cursor-target" aria-label="Закрыть окно">&times;</button>
+      <h2 id="contact-modal-title" class="contact-modal__title">Написать мне</h2>
+      <form id="contact-modal-form" class="contact-modal__form">
+        <div class="contact-modal__field">
+          <label class="contact-modal__label" for="modal-name">Имя</label>
+          <input class="contact-modal__input" id="modal-name" name="name" type="text" autocomplete="name" required placeholder="Ваше имя" />
+        </div>
+        <div class="contact-modal__field">
+          <label class="contact-modal__label" for="modal-email">Email</label>
+          <input class="contact-modal__input" id="modal-email" name="email" type="email" autocomplete="email" required placeholder="name@example.com" />
+        </div>
+        <div class="contact-modal__field">
+          <label class="contact-modal__label" for="modal-phone">Телефон</label>
+          <input class="contact-modal__input" id="modal-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required placeholder="+7 …" />
+        </div>
+        <label class="contact-modal__consent">
+          <input class="contact-modal__checkbox" id="modal-consent" name="consent" type="checkbox" required />
+          <span class="contact-modal__consent-text">Даю согласие на обработку моих персональных данных</span>
+        </label>
+        <button type="submit" class="btn btn--primary contact-modal__submit">
+          <svg class="btn__circuit" viewBox="0 0 320 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect class="btn__circuit-rail" x="1.5" y="1.5" width="317" height="49" rx="24.5" />
+            <rect class="btn__circuit-pulse" x="1.5" y="1.5" width="317" height="49" rx="24.5" pathLength="100" />
+          </svg>
+          <span class="btn__txt">Отправить</span>
+        </button>
+      </form>
+      <div id="contact-modal-success" class="contact-modal__success" hidden>
+        <p class="contact-modal__success-lead">Спасибо! Данные приняты.</p>
+        <button type="button" class="btn btn--secondary contact-modal__success-close">
+          <svg class="btn__circuit" viewBox="0 0 320 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect class="btn__circuit-rail" x="1.5" y="1.5" width="317" height="49" rx="24.5" />
+            <rect class="btn__circuit-pulse" x="1.5" y="1.5" width="317" height="49" rx="24.5" pathLength="100" />
+          </svg>
+          <span class="btn__txt">Закрыть</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <header class="site-header">
     <a class="logo" href="#top">VC</a>
     <nav class="nav" aria-label="Навигация по странице">
@@ -30,7 +81,7 @@
       <a href="#client-gets" title="Что получает клиент">Клиенту</a>
       <a href="#projects">Проекты</a>
       <a href="#testimonials">Отзывы</a>
-      <a href="#contact" class="nav__cta btn btn--warm btn--compact">
+      <a href="#contact" class="nav__cta btn btn--warm btn--compact js-open-contact-modal">
         <svg class="btn__circuit btn__circuit--warm" viewBox="0 0 320 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect class="btn__circuit-rail btn__circuit-rail--warm" x="1.5" y="1.5" width="317" height="49" rx="24.5" />
           <rect class="btn__circuit-pulse btn__circuit-pulse--warm" x="1.5" y="1.5" width="317" height="49" rx="24.5" pathLength="100" />
@@ -52,7 +103,7 @@
             Не просто «что-то сверстать», а собрать ощущение, стиль, логику и подачу так, чтобы проект хотелось открыть, листать и запомнить.
           </p>
           <div class="hero__actions hero__actions--cta animate-in" style="--d: 240ms">
-            <a class="btn btn--primary" href="#contact"><span class="btn__txt">Обсудить проект</span></a>
+            <a class="btn btn--primary js-open-contact-modal" href="#contact"><span class="btn__txt">Обсудить проект</span></a>
             <a class="btn btn--secondary" href="#projects">
               <svg class="btn__circuit" viewBox="0 0 320 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <rect class="btn__circuit-rail" x="1.5" y="1.5" width="317" height="49" rx="24.5" />
@@ -467,56 +518,6 @@
       </div>
     </section>
   </main>
-
-  <div
-    id="contact-modal"
-    class="contact-modal"
-    aria-hidden="true"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="contact-modal-title"
-  >
-    <div class="contact-modal__backdrop" aria-hidden="true"></div>
-    <div class="contact-modal__panel">
-      <button type="button" class="contact-modal__close cursor-target" aria-label="Закрыть окно">&times;</button>
-      <h2 id="contact-modal-title" class="contact-modal__title">Написать мне</h2>
-      <form id="contact-modal-form" class="contact-modal__form">
-        <div class="contact-modal__field">
-          <label class="contact-modal__label" for="modal-name">Имя</label>
-          <input class="contact-modal__input" id="modal-name" name="name" type="text" autocomplete="name" required placeholder="Ваше имя" />
-        </div>
-        <div class="contact-modal__field">
-          <label class="contact-modal__label" for="modal-email">Email</label>
-          <input class="contact-modal__input" id="modal-email" name="email" type="email" autocomplete="email" required placeholder="name@example.com" />
-        </div>
-        <div class="contact-modal__field">
-          <label class="contact-modal__label" for="modal-phone">Телефон</label>
-          <input class="contact-modal__input" id="modal-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required placeholder="+7 …" />
-        </div>
-        <label class="contact-modal__consent">
-          <input class="contact-modal__checkbox" id="modal-consent" name="consent" type="checkbox" required />
-          <span class="contact-modal__consent-text">Даю согласие на обработку моих персональных данных</span>
-        </label>
-        <button type="submit" class="btn btn--primary contact-modal__submit">
-          <svg class="btn__circuit" viewBox="0 0 320 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect class="btn__circuit-rail" x="1.5" y="1.5" width="317" height="49" rx="24.5" />
-            <rect class="btn__circuit-pulse" x="1.5" y="1.5" width="317" height="49" rx="24.5" pathLength="100" />
-          </svg>
-          <span class="btn__txt">Отправить</span>
-        </button>
-      </form>
-      <div id="contact-modal-success" class="contact-modal__success" hidden>
-        <p class="contact-modal__success-lead">Спасибо! Данные приняты.</p>
-        <button type="button" class="btn btn--secondary contact-modal__success-close">
-          <svg class="btn__circuit" viewBox="0 0 320 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect class="btn__circuit-rail" x="1.5" y="1.5" width="317" height="49" rx="24.5" />
-            <rect class="btn__circuit-pulse" x="1.5" y="1.5" width="317" height="49" rx="24.5" pathLength="100" />
-          </svg>
-          <span class="btn__txt">Закрыть</span>
-        </button>
-      </div>
-    </div>
-  </div>
 
   <footer class="site-footer">
     <p>Vibe Coder · <span id="year"></span></p>

@@ -1598,7 +1598,8 @@ main > .section:nth-child(even) {
 .contact-modal {
   position: fixed;
   inset: 0;
-  z-index: 10050;
+  z-index: 100000;
+  isolation: isolate;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1606,9 +1607,7 @@ main > .section:nth-child(even) {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition:
-    opacity 0.35s ease,
-    visibility 0.35s ease;
+  transition: opacity 0.35s ease;
 }
 
 .contact-modal.contact-modal--open {
@@ -1620,6 +1619,7 @@ main > .section:nth-child(even) {
 .contact-modal__backdrop {
   position: absolute;
   inset: 0;
+  z-index: 0;
   background: rgba(5, 18, 21, 0.78);
   backdrop-filter: blur(10px);
   cursor: pointer;
@@ -1627,7 +1627,7 @@ main > .section:nth-child(even) {
 
 .contact-modal__panel {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   max-width: 26rem;
   max-height: min(90vh, 36rem);
