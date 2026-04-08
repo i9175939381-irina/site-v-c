@@ -241,7 +241,7 @@ a:hover {
   font-family: "Cormorant Garamond", serif;
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(44px, 6.1vw, 78px);
+  font-size: clamp(52px, 7vw, 92px);
   line-height: 1.02;
   letter-spacing: -0.022em;
   font-synthesis: none;
