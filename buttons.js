@@ -93,6 +93,8 @@
     var heroName = root.querySelector(HERO_NAME_SELECTOR);
     if (!heroName) return;
     if (heroName.dataset.heroNameInit === "true") return;
+    if (reduceMotion) return;
+    if (window.matchMedia("(max-width: 900px), (hover: none), (pointer: coarse)").matches) return;
 
     if (!heroName.classList.contains("hero__name--magnetic")) {
       heroName.classList.add("hero__name--magnetic");
@@ -101,13 +103,17 @@
       heroName.setAttribute("tabindex", "0");
     }
 
-    var sourceText = (heroName.textContent || "").replace(/\s+/g, " ").trim();
+    var sourceText = (heroName.textContent || "").replace(/\r/g, "").trim();
     if (!sourceText) return;
 
     var frag = document.createDocumentFragment();
     Array.from(sourceText).forEach(function (ch) {
       var span = document.createElement("span");
-      if (ch === " ") {
+      if (ch === "\n") {
+        span.className = "hero__name-break";
+        span.setAttribute("aria-hidden", "true");
+        span.textContent = "";
+      } else if (ch === " ") {
         span.className = "hero__name-space";
         span.setAttribute("aria-hidden", "true");
         span.textContent = " ";
@@ -140,8 +146,8 @@
     }
 
     function frame() {
-      currentX += (targetX - currentX) * 0.16;
-      currentY += (targetY - currentY) * 0.16;
+      currentX += (targetX - currentX) * 0.14;
+      currentY += (targetY - currentY) * 0.14;
       heroName.style.setProperty("--dx", currentX.toFixed(2) + "px");
       heroName.style.setProperty("--dy", currentY.toFixed(2) + "px");
       if (active && Math.abs(targetX - currentX) + Math.abs(targetY - currentY) > 0.02) {
@@ -157,15 +163,10 @@
 
     function onMove(e) {
       var rect = heroName.getBoundingClientRect();
-      var rx = (e.clientX - rect.left) / Math.max(rect.width, 1);
-      var ry = (e.clientY - rect.top) / Math.max(rect.height, 1);
-
       var localX = e.clientX - rect.left - rect.width / 2;
       var localY = e.clientY - rect.top - rect.height / 2;
-      targetX = Math.max(-9, Math.min(9, localX * 0.11));
-      targetY = Math.max(-6, Math.min(6, localY * 0.085));
-      heroName.style.setProperty("--tx", (rx * 100).toFixed(1) + "%");
-      heroName.style.setProperty("--ty", (ry * 100).toFixed(1) + "%");
+      targetX = Math.max(-5, Math.min(5, localX * 0.07));
+      targetY = Math.max(-3.5, Math.min(3.5, localY * 0.055));
       active = true;
 
       chars.forEach(function (ch) {
@@ -175,14 +176,14 @@
         var dx = e.clientX - cx;
         var dy = e.clientY - cy;
         var dist = Math.hypot(dx, dy);
-        var radius = 170;
+        var radius = 145;
         var t = Math.max(0, 1 - dist / radius);
         var influence = t * t;
 
-        var moveX = (-dx / Math.max(dist, 1)) * influence * 7.2;
-        var moveY = (-dy / Math.max(dist, 1)) * influence * 3.1;
-        var scaleX = 1 + influence * 0.18;
-        var scaleY = 1 - influence * 0.08;
+        var moveX = (-dx / Math.max(dist, 1)) * influence * 3.6;
+        var moveY = (-dy / Math.max(dist, 1)) * influence * 1.4;
+        var scaleX = 1 + influence * 0.075;
+        var scaleY = 1 - influence * 0.03;
         ch.style.transform =
           "translate3d(" + moveX.toFixed(2) + "px, " + moveY.toFixed(2) + "px, 0) scale(" +
           scaleX.toFixed(3) + ", " + scaleY.toFixed(3) + ")";
@@ -195,17 +196,13 @@
       active = false;
       targetX = 0;
       targetY = 0;
-      heroName.style.setProperty("--tx", "50%");
-      heroName.style.setProperty("--ty", "50%");
       resetChars();
       ensureFrame();
     }
 
     heroName.addEventListener("pointermove", onMove);
-    heroName.addEventListener("pointerdown", onMove);
     heroName.addEventListener("pointerleave", onLeave);
     heroName.addEventListener("pointercancel", onLeave);
-    heroName.addEventListener("pointerup", onLeave);
     heroName.dataset.heroNameInit = "true";
   }
 

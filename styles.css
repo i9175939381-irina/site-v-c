@@ -229,8 +229,6 @@ a:hover {
 
 /* Имя под фото — курсив Cormorant Garamond (естественный наклон шрифта, не «наклонённый прямой») */
 .hero__name.name {
-  --tx: 50%;
-  --ty: 50%;
   --dx: 0px;
   --dy: 0px;
   position: relative;
@@ -248,45 +246,22 @@ a:hover {
   letter-spacing: -0.03em;
   font-synthesis: none;
   color: rgba(234, 255, 255, 0.92);
-  text-shadow: 0 0 28px rgba(0, 242, 255, 0.12);
+  text-shadow: 0 0 18px rgba(0, 242, 255, 0.08);
   display: inline-block;
+  white-space: pre-line;
   transform: translate3d(var(--dx), var(--dy), 0);
   will-change: transform;
 }
 
 .hero__name--magnetic {
-  isolation: isolate;
   cursor: default;
-}
-
-.hero__name--magnetic::before {
-  content: "";
-  position: absolute;
-  inset: -0.28em -0.12em;
-  border-radius: 999px;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse 135% 120% at var(--tx) var(--ty),
-    rgba(0, 242, 255, 0.24) 0%,
-    rgba(0, 242, 255, 0.08) 44%,
-    transparent 72%
-  );
-  opacity: 0.7;
-  filter: blur(0.2px);
-  transition: opacity 0.35s ease;
-}
-
-.hero__name--magnetic:hover::before,
-.hero__name--magnetic:focus-visible::before {
-  opacity: 1;
 }
 
 .hero__name--magnetic:hover,
 .hero__name--magnetic:focus-visible {
   text-shadow:
-    0 0 20px rgba(0, 242, 255, 0.26),
-    0 0 40px rgba(0, 242, 255, 0.12);
+    0 0 18px rgba(0, 242, 255, 0.18),
+    0 0 30px rgba(0, 242, 255, 0.08);
 }
 
 .hero__name--magnetic .hero__name-char {
@@ -300,6 +275,12 @@ a:hover {
 .hero__name--magnetic .hero__name-space {
   display: inline-block;
   width: 0.28em;
+}
+
+.hero__name--magnetic .hero__name-break {
+  display: block;
+  height: 0;
+  line-height: 0;
 }
 
 .hero__deco {
