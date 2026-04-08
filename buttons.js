@@ -142,6 +142,7 @@
     heroName.setAttribute("aria-label", sourceText);
 
     var chars = Array.prototype.slice.call(heroName.querySelectorAll(".hero__name-char"));
+    var lines = Array.prototype.slice.call(heroName.querySelectorAll(".hero__name-line"));
     if (!chars.length) return;
 
     var targetX = 0;
@@ -179,6 +180,8 @@
       var localY = e.clientY - rect.top - rect.height / 2;
       targetX = Math.max(-5, Math.min(5, localX * 0.07));
       targetY = Math.max(-3.5, Math.min(3.5, localY * 0.055));
+      heroName.style.setProperty("--line-glow-x", ((e.clientX - rect.left) / Math.max(rect.width, 1) * 100).toFixed(1) + "%");
+      heroName.style.setProperty("--line-glow-alpha", "1");
       active = true;
 
       chars.forEach(function (ch) {
@@ -208,7 +211,12 @@
       active = false;
       targetX = 0;
       targetY = 0;
+      heroName.style.setProperty("--line-glow-x", "50%");
+      heroName.style.setProperty("--line-glow-alpha", "0");
       resetChars();
+      lines.forEach(function (line) {
+        line.style.removeProperty("--line-glow-x");
+      });
       ensureFrame();
     }
 

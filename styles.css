@@ -227,10 +227,12 @@ a:hover {
   background: rgba(5, 20, 22, 0.5);
 }
 
-/* Имя под фото — курсив Cormorant Garamond (естественный наклон шрифта, не «наклонённый прямой») */
+/* Имя под фото — signature-style Great Vibes */
 .hero__name.name {
   --dx: 0px;
   --dy: 0px;
+  --line-glow-x: 50%;
+  --line-glow-alpha: 0;
   position: relative;
   z-index: 2;
   margin: clamp(1rem, 2.5vw, 1.5rem) 0 0;
@@ -238,17 +240,17 @@ a:hover {
   width: 100%;
   max-width: 100%;
   text-align: center;
-  font-family: "Cormorant Garamond", serif;
-  font-style: italic;
-  font-weight: 500;
+  font-family: "Great Vibes", cursive;
+  font-style: normal;
+  font-weight: 400;
   font-size: clamp(52px, 7vw, 92px);
   line-height: 1.02;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   font-synthesis: none;
   color: rgba(234, 255, 255, 0.92);
   text-shadow: 0 0 18px rgba(0, 242, 255, 0.08);
   display: inline-block;
-  white-space: normal;
+  white-space: pre-line;
   transform: translate3d(var(--dx), var(--dy), 0);
   will-change: transform;
 }
@@ -282,9 +284,28 @@ a:hover {
 }
 
 .hero__name--magnetic .hero__name-line {
+  position: relative;
   display: block;
   white-space: nowrap;
   text-align: center;
+}
+
+.hero__name--magnetic .hero__name-line::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 0.05em;
+  height: 0.28em;
+  border-radius: 999px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 75% 100% at var(--line-glow-x) 50%,
+    rgba(0, 242, 255, calc(var(--line-glow-alpha) * 0.45)) 0%,
+    rgba(0, 242, 255, calc(var(--line-glow-alpha) * 0.14)) 45%,
+    transparent 75%
+  );
+  filter: blur(6px);
 }
 
 .hero__deco {
