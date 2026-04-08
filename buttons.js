@@ -6,7 +6,6 @@
   "use strict";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const hasCoarsePointer = window.matchMedia("(hover: none), (pointer: coarse)").matches;
   const magneticMax = 6;
   const HERO_NAME_SELECTOR = ".hero__name--magnetic, .hero__name.name";
   const GENERIC_MAGNETIC_SELECTOR = "[data-magnetic-term]:not(.hero__name--magnetic)";
@@ -91,7 +90,7 @@
   }
 
   function bindHeroNameMagnet(root) {
-    if (reduceMotion || hasCoarsePointer) return;
+    if (reduceMotion) return;
     var heroName = root.querySelector(HERO_NAME_SELECTOR);
     if (!heroName) return;
     if (heroName.dataset.heroNameInit === "true") return;
@@ -164,8 +163,8 @@
 
       var localX = e.clientX - rect.left - rect.width / 2;
       var localY = e.clientY - rect.top - rect.height / 2;
-      targetX = Math.max(-7, Math.min(7, localX * 0.09));
-      targetY = Math.max(-5, Math.min(5, localY * 0.07));
+      targetX = Math.max(-9, Math.min(9, localX * 0.11));
+      targetY = Math.max(-6, Math.min(6, localY * 0.085));
       heroName.style.setProperty("--tx", (rx * 100).toFixed(1) + "%");
       heroName.style.setProperty("--ty", (ry * 100).toFixed(1) + "%");
       active = true;
@@ -177,14 +176,14 @@
         var dx = e.clientX - cx;
         var dy = e.clientY - cy;
         var dist = Math.hypot(dx, dy);
-        var radius = 150;
+        var radius = 170;
         var t = Math.max(0, 1 - dist / radius);
         var influence = t * t;
 
-        var moveX = (-dx / Math.max(dist, 1)) * influence * 5.5;
-        var moveY = (-dy / Math.max(dist, 1)) * influence * 2.4;
-        var scaleX = 1 + influence * 0.14;
-        var scaleY = 1 - influence * 0.06;
+        var moveX = (-dx / Math.max(dist, 1)) * influence * 7.2;
+        var moveY = (-dy / Math.max(dist, 1)) * influence * 3.1;
+        var scaleX = 1 + influence * 0.18;
+        var scaleY = 1 - influence * 0.08;
         ch.style.transform =
           "translate3d(" + moveX.toFixed(2) + "px, " + moveY.toFixed(2) + "px, 0) scale(" +
           scaleX.toFixed(3) + ", " + scaleY.toFixed(3) + ")";
@@ -204,8 +203,10 @@
     }
 
     heroName.addEventListener("pointermove", onMove);
+    heroName.addEventListener("pointerdown", onMove);
     heroName.addEventListener("pointerleave", onLeave);
     heroName.addEventListener("pointercancel", onLeave);
+    heroName.addEventListener("pointerup", onLeave);
     heroName.dataset.heroNameInit = "true";
   }
 
