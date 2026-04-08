@@ -90,7 +90,6 @@
   }
 
   function bindHeroNameMagnet(root) {
-    if (reduceMotion) return;
     var heroName = root.querySelector(HERO_NAME_SELECTOR);
     if (!heroName) return;
     if (heroName.dataset.heroNameInit === "true") return;

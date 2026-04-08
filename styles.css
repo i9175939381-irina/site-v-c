@@ -1929,11 +1929,6 @@ main > .section:nth-child(even) {
     transform: none !important;
   }
 
-  .hero__name--magnetic {
-    animation: none !important;
-    transform: none !important;
-  }
-
   .card.card--magnetic::before {
     transition: none;
     opacity: 0;
