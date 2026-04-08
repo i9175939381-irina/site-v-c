@@ -142,7 +142,6 @@
     heroName.setAttribute("aria-label", sourceText);
 
     var chars = Array.prototype.slice.call(heroName.querySelectorAll(".hero__name-char"));
-    var lines = Array.prototype.slice.call(heroName.querySelectorAll(".hero__name-line"));
     if (!chars.length) return;
 
     var targetX = 0;
@@ -178,10 +177,8 @@
       var rect = heroName.getBoundingClientRect();
       var localX = e.clientX - rect.left - rect.width / 2;
       var localY = e.clientY - rect.top - rect.height / 2;
-      targetX = Math.max(-5, Math.min(5, localX * 0.07));
-      targetY = Math.max(-3.5, Math.min(3.5, localY * 0.055));
-      heroName.style.setProperty("--line-glow-x", ((e.clientX - rect.left) / Math.max(rect.width, 1) * 100).toFixed(1) + "%");
-      heroName.style.setProperty("--line-glow-alpha", "1");
+      targetX = Math.max(-4.8, Math.min(4.8, localX * 0.065));
+      targetY = Math.max(-3.2, Math.min(3.2, localY * 0.05));
       active = true;
 
       chars.forEach(function (ch) {
@@ -191,14 +188,14 @@
         var dx = e.clientX - cx;
         var dy = e.clientY - cy;
         var dist = Math.hypot(dx, dy);
-        var radius = 145;
+        var radius = 132;
         var t = Math.max(0, 1 - dist / radius);
         var influence = t * t;
 
-        var moveX = (-dx / Math.max(dist, 1)) * influence * 3.6;
-        var moveY = (-dy / Math.max(dist, 1)) * influence * 1.4;
-        var scaleX = 1 + influence * 0.075;
-        var scaleY = 1 - influence * 0.03;
+        var moveX = (-dx / Math.max(dist, 1)) * influence * 3.1;
+        var moveY = (-dy / Math.max(dist, 1)) * influence * 1.2;
+        var scaleX = 1 + influence * 0.06;
+        var scaleY = 1 - influence * 0.024;
         ch.style.transform =
           "translate3d(" + moveX.toFixed(2) + "px, " + moveY.toFixed(2) + "px, 0) scale(" +
           scaleX.toFixed(3) + ", " + scaleY.toFixed(3) + ")";
@@ -211,12 +208,7 @@
       active = false;
       targetX = 0;
       targetY = 0;
-      heroName.style.setProperty("--line-glow-x", "50%");
-      heroName.style.setProperty("--line-glow-alpha", "0");
       resetChars();
-      lines.forEach(function (line) {
-        line.style.removeProperty("--line-glow-x");
-      });
       ensureFrame();
     }
 
