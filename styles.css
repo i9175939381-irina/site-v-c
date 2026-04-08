@@ -240,10 +240,10 @@ a:hover {
   width: 100%;
   max-width: 100%;
   text-align: center;
-  font-family: var(--font-hero-name);
+  font-family: "Cormorant Garamond", serif;
   font-style: italic;
   font-weight: 500;
-  font-size: 60px;
+  font-size: clamp(52px, 7vw, 84px);
   line-height: 1.05;
   letter-spacing: -0.5px;
   font-synthesis: none;
@@ -280,20 +280,8 @@ a:hover {
   opacity: 1;
 }
 
-.hero__name--magnetic .hero__name-line {
-  transition: transform 0.35s ease, text-shadow 0.35s ease;
-}
-
-.hero__name--magnetic .hero__name-line:first-child {
-  animation: hero-name-line-a 4.8s ease-in-out infinite;
-}
-
-.hero__name--magnetic .hero__name-line:last-child {
-  animation: hero-name-line-b 4.8s ease-in-out infinite;
-}
-
-.hero__name--magnetic:hover .hero__name-line,
-.hero__name--magnetic:focus-visible .hero__name-line {
+.hero__name--magnetic:hover,
+.hero__name--magnetic:focus-visible {
   text-shadow:
     0 0 20px rgba(0, 242, 255, 0.26),
     0 0 40px rgba(0, 242, 255, 0.12);
@@ -307,40 +295,6 @@ a:hover {
   50% {
     transform: translate(var(--dx), var(--dy)) translateY(-2px);
   }
-}
-
-@keyframes hero-name-line-a {
-  0%,
-  100% {
-    transform: translateX(0) rotate(0deg);
-  }
-  50% {
-    transform: translateX(-1.5px) rotate(-0.55deg);
-  }
-}
-
-@keyframes hero-name-line-b {
-  0%,
-  100% {
-    transform: translateX(0) rotate(0deg);
-  }
-  50% {
-    transform: translateX(1.5px) rotate(0.55deg);
-  }
-}
-
-.hero__name .hero__name-line {
-  display: block;
-  font-family: inherit;
-  font-style: inherit;
-  font-weight: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-}
-
-.hero__name .hero__name-line + .hero__name-line {
-  margin-top: 0;
 }
 
 .hero__deco {
@@ -1970,8 +1924,7 @@ main > .section:nth-child(even) {
     transform: none !important;
   }
 
-  .hero__name--magnetic,
-  .hero__name--magnetic .hero__name-line {
+  .hero__name--magnetic {
     animation: none !important;
     transform: none !important;
   }
