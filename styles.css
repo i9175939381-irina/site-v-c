@@ -248,13 +248,17 @@ a:hover {
   color: rgba(234, 255, 255, 0.92);
   text-shadow: 0 0 18px rgba(0, 242, 255, 0.08);
   display: inline-block;
-  white-space: pre-line;
+  white-space: normal;
   transform: translate3d(var(--dx), var(--dy), 0);
   will-change: transform;
 }
 
 .hero__name--magnetic {
   cursor: default;
+}
+
+.hero__name--magnetic::before {
+  content: none !important;
 }
 
 .hero__name--magnetic:hover,
@@ -277,10 +281,10 @@ a:hover {
   width: 0.28em;
 }
 
-.hero__name--magnetic .hero__name-break {
+.hero__name--magnetic .hero__name-line {
   display: block;
-  height: 0;
-  line-height: 0;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .hero__deco {

@@ -103,27 +103,39 @@
       heroName.setAttribute("tabindex", "0");
     }
 
-    var sourceText = (heroName.textContent || "").replace(/\r/g, "").trim();
+    var sourceText = (heroName.textContent || "").replace(/\s+/g, " ").trim();
     if (!sourceText) return;
 
+    function buildLine(text) {
+      var line = document.createElement("span");
+      line.className = "hero__name-line";
+      line.setAttribute("aria-hidden", "true");
+      Array.from(text).forEach(function (ch) {
+        var span = document.createElement("span");
+        if (ch === " ") {
+          span.className = "hero__name-space";
+          span.setAttribute("aria-hidden", "true");
+          span.textContent = " ";
+        } else {
+          span.className = "hero__name-char";
+          span.setAttribute("aria-hidden", "true");
+          span.textContent = ch;
+        }
+        line.appendChild(span);
+      });
+      return line;
+    }
+
+    var parts = sourceText.split(" ");
+    var firstLine = parts[0] || "";
+    var secondLine = parts.slice(1).join(" ");
+    if (!secondLine) secondLine = "";
+
     var frag = document.createDocumentFragment();
-    Array.from(sourceText).forEach(function (ch) {
-      var span = document.createElement("span");
-      if (ch === "\n") {
-        span.className = "hero__name-break";
-        span.setAttribute("aria-hidden", "true");
-        span.textContent = "";
-      } else if (ch === " ") {
-        span.className = "hero__name-space";
-        span.setAttribute("aria-hidden", "true");
-        span.textContent = " ";
-      } else {
-        span.className = "hero__name-char";
-        span.setAttribute("aria-hidden", "true");
-        span.textContent = ch;
-      }
-      frag.appendChild(span);
-    });
+    frag.appendChild(buildLine(firstLine));
+    if (secondLine) {
+      frag.appendChild(buildLine(secondLine));
+    }
 
     heroName.textContent = "";
     heroName.appendChild(frag);
