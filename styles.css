@@ -240,7 +240,7 @@ a:hover {
   width: 100%;
   max-width: 100%;
   text-align: center;
-  font-family: "Great Vibes", cursive;
+  font-family: "Great Vibes", "Marck Script", cursive;
   font-style: normal;
   font-weight: 400;
   font-size: clamp(52px, 7vw, 92px);
