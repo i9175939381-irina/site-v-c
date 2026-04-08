@@ -93,8 +93,9 @@
     var heroName = root.querySelector(HERO_NAME_SELECTOR);
     if (!heroName) return;
     if (heroName.dataset.heroNameInit === "true") return;
-    if (reduceMotion) return;
-    if (window.matchMedia("(max-width: 900px), (hover: none), (pointer: coarse)").matches) return;
+    var disableInteractive =
+      reduceMotion ||
+      window.matchMedia("(max-width: 900px), (hover: none), (pointer: coarse)").matches;
 
     if (!heroName.classList.contains("hero__name--magnetic")) {
       heroName.classList.add("hero__name--magnetic");
@@ -141,8 +142,18 @@
     heroName.appendChild(frag);
     heroName.setAttribute("aria-label", sourceText);
 
+    // Keep identical typography/line rendering on all devices.
+    // Only interactive motion is disabled on mobile/reduced-motion.
+    if (disableInteractive) {
+      heroName.dataset.heroNameInit = "true";
+      return;
+    }
+
     var chars = Array.prototype.slice.call(heroName.querySelectorAll(".hero__name-char"));
     if (!chars.length) return;
+    var charState = chars.map(function () {
+      return { x: 0, y: 0, sx: 1, sy: 1, tx: 0, ty: 0, tsx: 1, tsy: 1 };
+    });
 
     var targetX = 0;
     var targetY = 0;
@@ -152,8 +163,11 @@
     var active = false;
 
     function resetChars() {
-      chars.forEach(function (ch) {
-        ch.style.transform = "translate3d(0, 0, 0) scale(1)";
+      charState.forEach(function (s) {
+        s.tx = 0;
+        s.ty = 0;
+        s.tsx = 1;
+        s.tsy = 1;
       });
     }
 
@@ -162,7 +176,26 @@
       currentY += (targetY - currentY) * 0.14;
       heroName.style.setProperty("--dx", currentX.toFixed(2) + "px");
       heroName.style.setProperty("--dy", currentY.toFixed(2) + "px");
-      if (active && Math.abs(targetX - currentX) + Math.abs(targetY - currentY) > 0.02) {
+      var charsStillMoving = false;
+      chars.forEach(function (ch, i) {
+        var s = charState[i];
+        s.x += (s.tx - s.x) * 0.22;
+        s.y += (s.ty - s.y) * 0.22;
+        s.sx += (s.tsx - s.sx) * 0.2;
+        s.sy += (s.tsy - s.sy) * 0.2;
+        ch.style.transform =
+          "translate3d(" + s.x.toFixed(2) + "px, " + s.y.toFixed(2) + "px, 0) scale(" +
+          s.sx.toFixed(3) + ", " + s.sy.toFixed(3) + ")";
+        if (
+          Math.abs(s.tx - s.x) > 0.02 ||
+          Math.abs(s.ty - s.y) > 0.02 ||
+          Math.abs(s.tsx - s.sx) > 0.001 ||
+          Math.abs(s.tsy - s.sy) > 0.001
+        ) {
+          charsStillMoving = true;
+        }
+      });
+      if ((active && Math.abs(targetX - currentX) + Math.abs(targetY - currentY) > 0.02) || charsStillMoving) {
         rafId = window.requestAnimationFrame(frame);
       } else {
         rafId = 0;
@@ -177,28 +210,36 @@
       var rect = heroName.getBoundingClientRect();
       var localX = e.clientX - rect.left - rect.width / 2;
       var localY = e.clientY - rect.top - rect.height / 2;
-      targetX = Math.max(-4.8, Math.min(4.8, localX * 0.065));
-      targetY = Math.max(-3.2, Math.min(3.2, localY * 0.05));
+      targetX = Math.max(-7.2, Math.min(7.2, localX * 0.09));
+      targetY = Math.max(-4.8, Math.min(4.8, localY * 0.072));
       active = true;
 
-      chars.forEach(function (ch) {
+      var progressX = (e.clientX - rect.left) / Math.max(rect.width, 1);
+      chars.forEach(function (ch, i) {
         var c = ch.getBoundingClientRect();
         var cx = c.left + c.width / 2;
         var cy = c.top + c.height / 2;
         var dx = e.clientX - cx;
         var dy = e.clientY - cy;
         var dist = Math.hypot(dx, dy);
-        var radius = 132;
+        var radius = 178;
         var t = Math.max(0, 1 - dist / radius);
         var influence = t * t;
+        var pos = i / Math.max(chars.length - 1, 1);
+        var accordion = 1 - Math.min(1, Math.abs(pos - progressX) * 2.4);
+        var wave = influence * (0.68 + accordion * 0.7);
 
-        var moveX = (-dx / Math.max(dist, 1)) * influence * 3.1;
-        var moveY = (-dy / Math.max(dist, 1)) * influence * 1.2;
-        var scaleX = 1 + influence * 0.06;
-        var scaleY = 1 - influence * 0.024;
-        ch.style.transform =
-          "translate3d(" + moveX.toFixed(2) + "px, " + moveY.toFixed(2) + "px, 0) scale(" +
-          scaleX.toFixed(3) + ", " + scaleY.toFixed(3) + ")";
+        var moveX = (-dx / Math.max(dist, 1)) * wave * 5.6;
+        var moveY = (-dy / Math.max(dist, 1)) * wave * 2.2;
+        var stretch = wave * 0.11;
+        var scaleX = 1 + stretch;
+        var scaleY = 1 - stretch * 0.45;
+
+        var s = charState[i];
+        s.tx = moveX;
+        s.ty = moveY;
+        s.tsx = scaleX;
+        s.tsy = scaleY;
       });
 
       ensureFrame();
