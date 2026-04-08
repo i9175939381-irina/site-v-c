@@ -7,6 +7,42 @@
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const magneticMax = 6;
+  const HERO_NAME_SELECTOR = ".hero__name--magnetic, .hero__name.name";
+  const GENERIC_MAGNETIC_SELECTOR = "[data-magnetic-term]:not(.hero__name--magnetic)";
+
+  function bindMagneticTerm(el, options) {
+    if (reduceMotion || !el || el.dataset.magneticBound === "true") return;
+
+    var capX = options && typeof options.capX === "number" ? options.capX : 5;
+    var capY = options && typeof options.capY === "number" ? options.capY : 5;
+    var kx = options && typeof options.kx === "number" ? options.kx : 0.18;
+    var ky = options && typeof options.ky === "number" ? options.ky : 0.16;
+
+    function onMove(e) {
+      var r = el.getBoundingClientRect();
+      var tx = ((e.clientX - r.left) / Math.max(r.width, 1)) * 100;
+      var ty = ((e.clientY - r.top) / Math.max(r.height, 1)) * 100;
+      el.style.setProperty("--tx", tx.toFixed(1) + "%");
+      el.style.setProperty("--ty", ty.toFixed(1) + "%");
+
+      var mx = (e.clientX - r.left - r.width / 2) * kx;
+      var my = (e.clientY - r.top - r.height / 2) * ky;
+      el.style.setProperty("--dx", Math.max(-capX, Math.min(capX, mx)).toFixed(2) + "px");
+      el.style.setProperty("--dy", Math.max(-capY, Math.min(capY, my)).toFixed(2) + "px");
+    }
+
+    function onLeave() {
+      el.style.setProperty("--tx", "50%");
+      el.style.setProperty("--ty", "50%");
+      el.style.setProperty("--dx", "0px");
+      el.style.setProperty("--dy", "0px");
+    }
+
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerleave", onLeave);
+    el.addEventListener("pointercancel", onLeave);
+    el.dataset.magneticBound = "true";
+  }
 
   function bindMagneticAndGlow(root) {
     if (reduceMotion) return;
@@ -48,34 +84,28 @@
 
   function bindWhyTerms(root) {
     if (reduceMotion) return;
-
-    var cap = 5;
-
-    root.querySelectorAll("[data-magnetic-term]").forEach(function (el) {
-      function onMove(e) {
-        var r = el.getBoundingClientRect();
-        var tx = ((e.clientX - r.left) / Math.max(r.width, 1)) * 100;
-        var ty = ((e.clientY - r.top) / Math.max(r.height, 1)) * 100;
-        el.style.setProperty("--tx", tx.toFixed(1) + "%");
-        el.style.setProperty("--ty", ty.toFixed(1) + "%");
-
-        var mx = (e.clientX - r.left - r.width / 2) * 0.18;
-        var my = (e.clientY - r.top - r.height / 2) * 0.16;
-        el.style.setProperty("--dx", Math.max(-cap, Math.min(cap, mx)).toFixed(2) + "px");
-        el.style.setProperty("--dy", Math.max(-cap, Math.min(cap, my)).toFixed(2) + "px");
-      }
-
-      function onLeave() {
-        el.style.setProperty("--tx", "50%");
-        el.style.setProperty("--ty", "50%");
-        el.style.setProperty("--dx", "0px");
-        el.style.setProperty("--dy", "0px");
-      }
-
-      el.addEventListener("pointermove", onMove);
-      el.addEventListener("pointerleave", onLeave);
-      el.addEventListener("pointercancel", onLeave);
+    root.querySelectorAll(GENERIC_MAGNETIC_SELECTOR).forEach(function (el) {
+      bindMagneticTerm(el, { capX: 5, capY: 5, kx: 0.18, ky: 0.16 });
     });
+  }
+
+  function bindHeroNameMagnet(root) {
+    if (reduceMotion) return;
+    var heroName = root.querySelector(HERO_NAME_SELECTOR);
+    if (!heroName) return;
+
+    // Self-healing: keep hero name magnetic even if attribute/class was edited later.
+    if (!heroName.classList.contains("hero__name--magnetic")) {
+      heroName.classList.add("hero__name--magnetic");
+    }
+    if (!heroName.hasAttribute("data-magnetic-term")) {
+      heroName.setAttribute("data-magnetic-term", "");
+    }
+    if (!heroName.hasAttribute("tabindex")) {
+      heroName.setAttribute("tabindex", "0");
+    }
+
+    bindMagneticTerm(heroName, { capX: 7, capY: 6, kx: 0.2, ky: 0.17 });
   }
 
   function bindContactModal() {
@@ -152,6 +182,7 @@
   }
 
   bindMagneticAndGlow(document);
+  bindHeroNameMagnet(document);
   bindWhyTerms(document);
   bindContactModal();
 })();

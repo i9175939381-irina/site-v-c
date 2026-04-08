@@ -229,6 +229,10 @@ a:hover {
 
 /* Имя под фото — курсив Cormorant Garamond (естественный наклон шрифта, не «наклонённый прямой») */
 .hero__name.name {
+  --tx: 50%;
+  --ty: 50%;
+  --dx: 0px;
+  --dy: 0px;
   position: relative;
   z-index: 2;
   margin: clamp(1rem, 2.5vw, 1.5rem) 0 0;
@@ -245,6 +249,84 @@ a:hover {
   font-synthesis: none;
   color: rgba(234, 255, 255, 0.92);
   text-shadow: 0 0 28px rgba(0, 242, 255, 0.12);
+  transform: translate(var(--dx), var(--dy));
+}
+
+.hero__name--magnetic {
+  isolation: isolate;
+  animation: hero-name-float 4.8s ease-in-out infinite;
+}
+
+.hero__name--magnetic::before {
+  content: "";
+  position: absolute;
+  inset: -0.28em -0.12em;
+  border-radius: 999px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 135% 120% at var(--tx) var(--ty),
+    rgba(0, 242, 255, 0.24) 0%,
+    rgba(0, 242, 255, 0.08) 44%,
+    transparent 72%
+  );
+  opacity: 0.7;
+  filter: blur(0.2px);
+  transition: opacity 0.35s ease;
+}
+
+.hero__name--magnetic:hover::before,
+.hero__name--magnetic:focus-visible::before {
+  opacity: 1;
+}
+
+.hero__name--magnetic .hero__name-line {
+  transition: transform 0.35s ease, text-shadow 0.35s ease;
+}
+
+.hero__name--magnetic .hero__name-line:first-child {
+  animation: hero-name-line-a 4.8s ease-in-out infinite;
+}
+
+.hero__name--magnetic .hero__name-line:last-child {
+  animation: hero-name-line-b 4.8s ease-in-out infinite;
+}
+
+.hero__name--magnetic:hover .hero__name-line,
+.hero__name--magnetic:focus-visible .hero__name-line {
+  text-shadow:
+    0 0 20px rgba(0, 242, 255, 0.26),
+    0 0 40px rgba(0, 242, 255, 0.12);
+}
+
+@keyframes hero-name-float {
+  0%,
+  100% {
+    transform: translate(var(--dx), var(--dy)) translateY(0);
+  }
+  50% {
+    transform: translate(var(--dx), var(--dy)) translateY(-2px);
+  }
+}
+
+@keyframes hero-name-line-a {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(-1.5px) rotate(-0.55deg);
+  }
+}
+
+@keyframes hero-name-line-b {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(1.5px) rotate(0.55deg);
+  }
 }
 
 .hero__name .hero__name-line {
@@ -1885,6 +1967,12 @@ main > .section:nth-child(even) {
   .card.card--magnetic,
   .card.card--magnetic:hover,
   .card.card--magnetic:focus-visible {
+    transform: none !important;
+  }
+
+  .hero__name--magnetic,
+  .hero__name--magnetic .hero__name-line {
+    animation: none !important;
     transform: none !important;
   }
 
