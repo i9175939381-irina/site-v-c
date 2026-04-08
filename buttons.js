@@ -6,6 +6,7 @@
   "use strict";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hasCoarsePointer = window.matchMedia("(hover: none), (pointer: coarse)").matches;
   const magneticMax = 6;
   const HERO_NAME_SELECTOR = ".hero__name--magnetic, .hero__name.name";
   const GENERIC_MAGNETIC_SELECTOR = "[data-magnetic-term]:not(.hero__name--magnetic)";
@@ -90,22 +91,122 @@
   }
 
   function bindHeroNameMagnet(root) {
-    if (reduceMotion) return;
+    if (reduceMotion || hasCoarsePointer) return;
     var heroName = root.querySelector(HERO_NAME_SELECTOR);
     if (!heroName) return;
+    if (heroName.dataset.heroNameInit === "true") return;
 
-    // Self-healing: keep hero name magnetic even if attribute/class was edited later.
     if (!heroName.classList.contains("hero__name--magnetic")) {
       heroName.classList.add("hero__name--magnetic");
-    }
-    if (!heroName.hasAttribute("data-magnetic-term")) {
-      heroName.setAttribute("data-magnetic-term", "");
     }
     if (!heroName.hasAttribute("tabindex")) {
       heroName.setAttribute("tabindex", "0");
     }
 
-    bindMagneticTerm(heroName, { capX: 7, capY: 6, kx: 0.2, ky: 0.17 });
+    var sourceText = (heroName.textContent || "").replace(/\s+/g, " ").trim();
+    if (!sourceText) return;
+
+    var frag = document.createDocumentFragment();
+    Array.from(sourceText).forEach(function (ch) {
+      var span = document.createElement("span");
+      if (ch === " ") {
+        span.className = "hero__name-space";
+        span.setAttribute("aria-hidden", "true");
+        span.textContent = " ";
+      } else {
+        span.className = "hero__name-char";
+        span.setAttribute("aria-hidden", "true");
+        span.textContent = ch;
+      }
+      frag.appendChild(span);
+    });
+
+    heroName.textContent = "";
+    heroName.appendChild(frag);
+    heroName.setAttribute("aria-label", sourceText);
+
+    var chars = Array.prototype.slice.call(heroName.querySelectorAll(".hero__name-char"));
+    if (!chars.length) return;
+
+    var targetX = 0;
+    var targetY = 0;
+    var currentX = 0;
+    var currentY = 0;
+    var rafId = 0;
+    var active = false;
+
+    function resetChars() {
+      chars.forEach(function (ch) {
+        ch.style.transform = "translate3d(0, 0, 0) scale(1)";
+      });
+    }
+
+    function frame() {
+      currentX += (targetX - currentX) * 0.16;
+      currentY += (targetY - currentY) * 0.16;
+      heroName.style.setProperty("--dx", currentX.toFixed(2) + "px");
+      heroName.style.setProperty("--dy", currentY.toFixed(2) + "px");
+      if (active && Math.abs(targetX - currentX) + Math.abs(targetY - currentY) > 0.02) {
+        rafId = window.requestAnimationFrame(frame);
+      } else {
+        rafId = 0;
+      }
+    }
+
+    function ensureFrame() {
+      if (!rafId) rafId = window.requestAnimationFrame(frame);
+    }
+
+    function onMove(e) {
+      var rect = heroName.getBoundingClientRect();
+      var rx = (e.clientX - rect.left) / Math.max(rect.width, 1);
+      var ry = (e.clientY - rect.top) / Math.max(rect.height, 1);
+
+      var localX = e.clientX - rect.left - rect.width / 2;
+      var localY = e.clientY - rect.top - rect.height / 2;
+      targetX = Math.max(-7, Math.min(7, localX * 0.09));
+      targetY = Math.max(-5, Math.min(5, localY * 0.07));
+      heroName.style.setProperty("--tx", (rx * 100).toFixed(1) + "%");
+      heroName.style.setProperty("--ty", (ry * 100).toFixed(1) + "%");
+      active = true;
+
+      chars.forEach(function (ch) {
+        var c = ch.getBoundingClientRect();
+        var cx = c.left + c.width / 2;
+        var cy = c.top + c.height / 2;
+        var dx = e.clientX - cx;
+        var dy = e.clientY - cy;
+        var dist = Math.hypot(dx, dy);
+        var radius = 150;
+        var t = Math.max(0, 1 - dist / radius);
+        var influence = t * t;
+
+        var moveX = (-dx / Math.max(dist, 1)) * influence * 5.5;
+        var moveY = (-dy / Math.max(dist, 1)) * influence * 2.4;
+        var scaleX = 1 + influence * 0.14;
+        var scaleY = 1 - influence * 0.06;
+        ch.style.transform =
+          "translate3d(" + moveX.toFixed(2) + "px, " + moveY.toFixed(2) + "px, 0) scale(" +
+          scaleX.toFixed(3) + ", " + scaleY.toFixed(3) + ")";
+      });
+
+      ensureFrame();
+    }
+
+    function onLeave() {
+      active = false;
+      targetX = 0;
+      targetY = 0;
+      heroName.style.setProperty("--tx", "50%");
+      heroName.style.setProperty("--ty", "50%");
+      resetChars();
+      ensureFrame();
+    }
+
+    heroName.addEventListener("pointermove", onMove);
+    heroName.addEventListener("pointerleave", onLeave);
+    heroName.addEventListener("pointercancel", onLeave);
+    heroName.dataset.heroNameInit = "true";
   }
 
   function bindContactModal() {
